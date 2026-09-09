@@ -96,6 +96,7 @@ ${body}
   </div>
 </div></footer>
 <script>(function(){var b=document.querySelector('[data-theme-toggle]');if(!b)return;var r=document.documentElement;function paint(){var light=r.getAttribute('data-theme')==='light';b.setAttribute('aria-label',light?'Switch to dark theme':'Switch to light theme');b.setAttribute('title',light?'Dark theme':'Light theme');}b.addEventListener('click',function(){var light=r.getAttribute('data-theme')==='light';if(light){r.removeAttribute('data-theme');}else{r.setAttribute('data-theme','light');}try{localStorage.setItem('lb-theme',light?'dark':'light')}catch(e){}paint();});paint();})();</script>
+<script>(function(){document.querySelectorAll('.svc-head').forEach(function(b){b.addEventListener('click',function(){var card=b.closest('.svc');var open=card.classList.toggle('open');b.setAttribute('aria-expanded',open?'true':'false');});});var h=location.hash&&document.querySelector(location.hash+' .svc-head');if(h){h.click();}})();</script>
 </body>
 </html>
 `;
@@ -124,13 +125,19 @@ const FIG = {
 };
 const fig = (slug) => (FIG[slug] ? `<div class="fig">${FIG[slug]}</div>` : '');
 
+// Collapsed cards: figure + title; click expands to the summary, three bullets and a link to the detail page.
 const serviceCards = (items, withLinks) => `<div class="grid g2fixed">${items
   .map(
-    (s) => `<article class="card">
-  ${fig(s.slug)}
-  <h3>${esc(s.title)}</h3>
-  <p class="muted">${esc(s.short)}</p>
-  ${withLinks ? `<a class="more" href="${url('/services/#' + s.slug)}">Read more<span class="sr-only"> about ${esc(s.title)}</span></a>` : ''}
+    (s) => `<article class="card svc" id="card-${s.slug}">
+  <button class="svc-head" type="button" aria-expanded="false" aria-controls="svc-${s.slug}">
+    ${fig(s.slug)}
+    <span class="svc-title"><h3>${esc(s.title)}</h3><span class="svc-ind" aria-hidden="true"></span></span>
+  </button>
+  <div class="svc-body" id="svc-${s.slug}"><div class="svc-inner">
+    <p class="muted">${esc(s.short)}</p>
+    <ul class="small">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
+    ${withLinks ? `<a class="more" href="${url('/services/#' + s.slug)}">Read more<span class="sr-only"> about ${esc(s.title)}</span></a>` : ''}
+  </div></div>
 </article>`
   )
   .join('')}</div>`;

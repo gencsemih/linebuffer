@@ -1,9 +1,7 @@
-# Deploys dist/ to GitHub Pages on every push to main.
+# Optional: deploys dist/ to GitHub Pages when run by hand (the live site is on shared hosting; see README).
 # Enable Pages in the repository settings (Source: GitHub Actions) and set the custom domain to the value in site.config.json.
 name: pages
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

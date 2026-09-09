@@ -104,6 +104,24 @@ section + section { border-top: 1px solid var(--line); }
 .fig { color: var(--ink); margin: 2px 0 10px; }
 .fig svg { display: block; width: 100%; max-width: 200px; height: auto; }
 
+/* Collapsible service cards */
+.svc { gap: 0; }
+.svc-head { all: unset; display: block; width: 100%; cursor: pointer; box-sizing: border-box; padding: 2px 0 4px; }
+.svc-head:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.svc-head .fig { margin-bottom: 8px; }
+.svc-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.svc-ind { position: relative; flex: 0 0 auto; width: 14px; height: 14px; }
+.svc-ind::before, .svc-ind::after { content: ""; position: absolute; left: 0; top: 6px; width: 14px; height: 2px; background: var(--ink-3); transition: transform .3s ease, background .2s ease; }
+.svc-ind::after { transform: rotate(90deg); }
+.svc-head:hover .svc-ind::before, .svc-head:hover .svc-ind::after { background: var(--accent); }
+.svc.open .svc-ind::after { transform: rotate(0deg); }
+.svc.open .svc-ind::before, .svc.open .svc-ind::after { background: var(--accent); }
+.svc-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+.svc-inner { overflow: hidden; min-height: 0; display: grid; gap: 8px; }
+.svc-inner > :first-child { margin-top: 6px; }
+.svc-inner > :last-child { margin-bottom: 4px; }
+.svc.open .svc-body { grid-template-rows: 1fr; }
+
 /* "Cards" are rule-topped entries, not boxes */
 .card { border-top: 1px solid var(--line-strong); padding-top: 12px; display: grid; gap: 6px; align-content: start; min-width: 0; }
 .card h3 { letter-spacing: -0.01em; }
