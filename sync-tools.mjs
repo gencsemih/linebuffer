@@ -6,7 +6,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
 const sources = [
-  { slug: 'osd-designer', app: '../osd-menu/web/dist/index.html' },
+  { slug: 'osd-design-studio', app: '../osd-menu/web/dist/index.html' },
   // Add Timing Studio / Register Studio here once they may be published:
   // { slug: 'timing-studio', app: '../../../eyeo/timing_editor/web/dist/index.html' },
 ];

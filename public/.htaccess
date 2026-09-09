@@ -4,6 +4,8 @@
 Options -Indexes
 ErrorDocument 404 /404.html
 RedirectMatch 301 ^/work/?$ /
+RedirectMatch 301 ^/tools/osd-designer/?$ /tools/osd-design-studio/
+RedirectMatch 301 ^/tools/osd-designer/app/?$ /tools/osd-design-studio/app/
 
 <IfModule mod_rewrite.c>
   RewriteEngine On

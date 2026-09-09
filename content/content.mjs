@@ -136,7 +136,7 @@ export const tools = {
   intro:
     'Built for problems that kept coming back, client after client. Each tool solves one of them once, exactly.',
   byName: {
-    'osd-designer': {
+    'osd-design-studio': {
       summary: 'Design an on-screen-display menu on a canvas and export a verified, fixed-latency Verilog overlay module with its testbench.',
       lede:
         'Lay out an on-screen-display menu on a canvas the size of your video’s active area, try the menu with on-screen buttons, and export a synthesizable Verilog or SystemVerilog overlay module: video stream in, the same stream out with the OSD drawn on it, a fixed eight-cycle latency, and no frame or line buffer. The export includes a self-checking testbench whose golden frames come from the same renderer you designed with.',

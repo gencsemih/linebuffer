@@ -26,12 +26,12 @@
   ],
   "tools": [
     {
-      "slug": "osd-designer",
-      "name": "Digital OSD Designer",
+      "slug": "osd-design-studio",
+      "name": "OSD Design Studio",
       "version": "0.1.0",
       "publish": true,
       "status": "browser",
-      "app": "/tools/osd-designer/app/",
+      "app": "/tools/osd-design-studio/app/",
       "screenshots": [
         {
           "file": "designer",
