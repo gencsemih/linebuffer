@@ -157,20 +157,25 @@ const workList = (items) => `<div class="work">${items
   )
   .join('')}</div>`;
 
-const toolCards = (list) => `<div class="grid g3">${list
+const toolCards = (list) => `<div class="tools">${list
   .map((t) => {
     const c = content.tools.byName[t.slug];
     const status = t.status === 'browser' ? '<span class="pill acc">runs in the browser</span>' : '<span class="pill">on request</span>';
-    return `<article class="card tool-card">
-  <div class="head"><h3>${esc(t.name)}</h3><span class="ver">v${esc(t.version)}</span></div>
-  ${status}
-  <p class="muted small">${esc(c.summary)}</p>
-  <a class="more" href="${url('/tools/' + t.slug + '/')}">About ${esc(t.name)}</a>
+    const shot = t.hero
+      ? `<a class="tool-shot" href="${url('/tools/' + t.slug + '/')}" tabindex="-1" aria-hidden="true"><img src="${url(`/img/${t.slug}/${t.hero}-750.webp`)}" srcset="${url(`/img/${t.slug}/${t.hero}-750.webp`)} 750w, ${url(`/img/${t.slug}/${t.hero}.webp`)} 1500w" sizes="(max-width: 720px) 100vw, 60vw" width="750" height="475" loading="lazy" alt=""></a>`
+      : `<div class="tool-shot tool-shot-empty" aria-hidden="true">${mark}</div>`;
+    return `<article class="tool">
+  ${shot}
+  <div class="tool-text">
+    <div class="head"><h3><a href="${url('/tools/' + t.slug + '/')}">${esc(t.name)}</a></h3><span class="ver">v${esc(t.version)}</span></div>
+    ${status}
+    <p class="muted">${esc(c.lede)}</p>
+    <a class="more" href="${url('/tools/' + t.slug + '/')}">About ${esc(t.name)}</a>
+  </div>
 </article>`;
   })
   .join('')}</div>`;
 
-rmSync(out, { recursive: true, force: true });   // start from a clean dist/
 const pages = [];
 const H = content.home;
 

@@ -57,7 +57,8 @@
           "file": "export",
           "caption": "Export: RTL, package, ROM images, testbench and register map"
         }
-      ]
+      ],
+      "hero": "designer-menu"
     },
     {
       "slug": "timing-studio",
