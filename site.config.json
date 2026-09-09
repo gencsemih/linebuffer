@@ -1,0 +1,81 @@
+{
+  "name": "linebuffer",
+  "displayName": "Linebuffer",
+  "descriptor": "Digital design and verification for image sensors, ASICs and FPGAs",
+  "domain": "linebuffer.com",
+  "basePath": "",
+  "email": "hello@linebuffer.com",
+  "founder": "Semih Genç",
+  "legalName": "",
+  "location": "Türkiye",
+  "language": "en",
+  "year": 2026,
+  "nav": [
+    {
+      "label": "Services",
+      "href": "/services/"
+    },
+    {
+      "label": "Tools",
+      "href": "/tools/"
+    },
+    {
+      "label": "About",
+      "href": "/about/"
+    }
+  ],
+  "tools": [
+    {
+      "slug": "osd-designer",
+      "name": "Digital OSD Designer",
+      "version": "0.1.0",
+      "publish": true,
+      "status": "browser",
+      "app": "/tools/osd-designer/app/",
+      "screenshots": [
+        {
+          "file": "designer",
+          "caption": "Designer: canvas over a sample frame, element list, inspector"
+        },
+        {
+          "file": "designer-menu",
+          "caption": "Designer with the menu open and the run-time state panel"
+        },
+        {
+          "file": "menu",
+          "caption": "Menu: pages, items and the navigation state machine"
+        },
+        {
+          "file": "assets",
+          "caption": "Assets: fonts, icons and sample frames"
+        },
+        {
+          "file": "project",
+          "caption": "Project: video format, colour, interfaces"
+        },
+        {
+          "file": "export",
+          "caption": "Export: RTL, package, ROM images, testbench and register map"
+        }
+      ]
+    },
+    {
+      "slug": "timing-studio",
+      "name": "Image Sensor Timing Studio",
+      "version": "1.19.0",
+      "publish": false,
+      "rightsNote": "Built in a client context. Confirm the right to present it under this brand before setting publish to true.",
+      "status": "request",
+      "screenshots": []
+    },
+    {
+      "slug": "register-studio",
+      "name": "Register Studio",
+      "version": "0.1.0",
+      "publish": false,
+      "rightsNote": "Built in a client context. Confirm the right to present it under this brand before setting publish to true.",
+      "status": "request",
+      "screenshots": []
+    }
+  ]
+}

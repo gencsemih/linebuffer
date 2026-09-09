@@ -1,0 +1,13 @@
+{
+  "name": "linebuffer-site",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Static site for the studio. No dependencies.",
+  "scripts": {
+    "build": "node build.mjs",
+    "draft": "node build.mjs --draft",
+    "serve": "python3 -m http.server 8090 --directory dist",
+    "sync-tools": "node sync-tools.mjs"
+  }
+}

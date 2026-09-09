@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" role="img" aria-label="Linebuffer favicon">
+  <rect width="16" height="16" rx="3.5" fill="#0B0F18"/>
+  <g fill="#F4F6FA">
+  <rect x="2.0" y="4" width="2.5" height="2.5"/>
+  <rect x="5.5" y="4" width="2.5" height="2.5"/>
+  <rect x="9.0" y="4" width="2.5" height="2.5"/>
+  <rect x="12.5" y="4" width="2.5" height="2.5"/>
+  <rect x="2" y="9.5" width="2.5" height="2.5"/>
+  <rect x="5.5" y="9.5" width="2.5" height="2.5" fill="#D9A521"/>
+  <rect x="9" y="9.5" width="2.5" height="2.5" opacity=".25"/>
+  <rect x="12.5" y="9.5" width="2.5" height="2.5" opacity=".25"/>
+  </g>
+</svg>
