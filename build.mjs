@@ -131,10 +131,10 @@ const serviceCards = (items, withLinks) => `<div class="grid g2fixed">${items
     (s) => `<article class="card svc" id="card-${s.slug}">
   <button class="svc-head" type="button" aria-expanded="false" aria-controls="svc-${s.slug}">
     ${fig(s.slug)}
-    <span class="svc-title"><h3>${esc(s.title)}</h3><span class="svc-ind" aria-hidden="true"></span></span>
+    <span class="svc-text"><h3>${esc(s.title)}</h3><span class="muted small">${esc(s.short)}</span></span>
+    <span class="svc-ind" aria-hidden="true"></span>
   </button>
   <div class="svc-body" id="svc-${s.slug}"><div class="svc-inner">
-    <p class="muted">${esc(s.short)}</p>
     <ul class="small">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
     ${withLinks ? `<a class="more" href="${url('/services/#' + s.slug)}">Read more<span class="sr-only"> about ${esc(s.title)}</span></a>` : ''}
   </div></div>
