@@ -210,9 +210,9 @@ export const tools = {
 export const about = {
   title: 'About',
   paragraphs: [
-    'Linebuffer is the design practice of Semih Genç: image sensor and camera electronics, from the digital inside the sensor to the boards around it.',
-    'Semih has spent his career in image-sensor and camera electronics: digital design for CMOS and infrared imagers, FPGA video systems, and the verification that goes with them.',
-    'The practice is based in Türkiye and works with teams across Europe and beyond, remote by default and on site when the bench needs it.',
+    'Linebuffer is a design centre for image sensor and camera electronics: digital design and verification for image sensors, ROICs, FPGAs and ASICs, and the hardware around them.',
+    'We have spent our careers in this field: digital design for CMOS and infrared imagers, FPGA video systems, low-noise analog boards, and the verification that goes with them. We work as an extension of your team, with a specification first and a testbench beside every block.',
+    'We are based in Türkiye and work with teams across Europe and beyond, remote by default and on site when the bench needs it.',
   ],
   name: {
     title: 'Why the name',
