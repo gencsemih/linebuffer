@@ -340,9 +340,10 @@ for (const t of tools) {
     ${c.paragraphs ? `<div class="tool-paras">${c.paragraphs.map((t) => `<p class="muted">${esc(t)}</p>`).join('')}</div>` : ''}
   </div>
   ${t.hero ? `<a class="tool-hero-img" href="${asset(`/img/${t.slug}/${t.hero}.webp`)}"><img src="${asset(`/img/${t.slug}/${t.hero}-750.webp`)}" srcset="${asset(`/img/${t.slug}/${t.hero}-750.webp`)} 750w, ${asset(`/img/${t.slug}/${t.hero}.webp`)} 1500w" sizes="(max-width: 860px) 100vw, 45vw" width="750" height="475" alt="${esc(t.name)}: the designer with the menu open"></a>` : ''}
-  ${c.options ? cta : `<div class="btns">${cta}</div>`}
+  ${c.options ? '' : `<div class="btns">${cta}</div>`}
   ${DRAFT && t.rightsNote ? `<p class="small" style="color:var(--accent)">Draft note: ${esc(t.rightsNote)}</p>` : ''}
 </div></div></section>
+${c.options ? `<section><div class="wrap"><div class="sec-head"><h2>Editions</h2></div>${cta}</div></section>` : ''}
 ${ioSection(t)}
 ${gallery}
 <section><div class="wrap">
