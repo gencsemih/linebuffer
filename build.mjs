@@ -333,7 +333,7 @@ for (const t of tools) {
 <section class="hero"><div class="wrap"><div class="tool-hero">
   <div class="head"><h1>${esc(t.name)}</h1><span class="ver">v${esc(t.version)}</span>${t.status === 'browser' ? '<span class="pill acc">free in the browser</span>' : '<span class="pill">on request</span>'}</div>
   <p class="lede">${esc(c.lede)}</p>
-  ${c.points ? `<ul class="points">${c.points.map(([k, v]) => `<li><strong>${esc(k)}</strong> ${esc(v)}</li>`).join('')}</ul>` : ''}
+  ${c.points ? `<div class="points">${c.points.map(([k, v]) => `<div class="point"><h3>${esc(k)}</h3><p class="muted small">${esc(v)}</p></div>`).join('')}</div>` : ''}
   ${c.options ? cta : `<div class="btns">${cta}</div>`}
   ${DRAFT && t.rightsNote ? `<p class="small" style="color:var(--accent)">Draft note: ${esc(t.rightsNote)}</p>` : ''}
 </div></div></section>
