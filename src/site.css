@@ -41,8 +41,7 @@ a { color: var(--link); text-decoration: underline; text-decoration-color: var(-
 a:hover { text-decoration-color: var(--accent); }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 h1, h2, h3, h4 { margin: 0; line-height: 1.15; letter-spacing: -0.015em; text-wrap: balance; font-weight: 600; }
-h1 { font-size: clamp(28px, 3.8vw, 40px); }
-h2 { font-size: clamp(22px, 2.8vw, 30px); }
+h1, h2 { font-size: clamp(22px, 2.8vw, 30px); }
 h3 { font-size: 17px; }
 h4 { font-size: 16px; }
 p { margin: 0; }
@@ -136,9 +135,9 @@ section + section { border-top: 1px solid var(--line); }
 .btn.primary:hover { background: var(--accent); border-color: var(--accent); color: #1B2733; }
 
 /* Hero */
-.hero { padding: 44px 0 32px; }
-.hero .inner { display: grid; gap: 18px; max-width: 760px; }
-.hero h1 { max-width: 20ch; }
+.hero { padding: 36px 0 32px; }
+.hero .inner { display: grid; gap: 14px; max-width: 760px; }
+.hero h1 { max-width: 28ch; }
 .hero .lede { max-width: 60ch; }
 
 /* Process (ordered) */
