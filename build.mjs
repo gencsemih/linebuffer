@@ -60,7 +60,7 @@ const orgLd = JSON.stringify({
   logo: `${site}${url('/brand/app-icon.svg')}`, email: cfg.email, founder: { '@type': 'Person', name: cfg.founder },
   description: cfg.descriptor, knowsAbout: ['image sensor digital design', 'ROIC', 'FPGA design', 'video bridging', 'MIPI CSI-2', 'real-time image processing', 'on-screen display'],
 });
-function page({ path, title, description, body, current, titleOverride, ogImage, jsonld = [] }) {
+function page({ path, title, description, body, current, titleOverride, ogImage, jsonld = [], noindex = false }) {
   const fullTitle = titleOverride || (path === '/' ? `${cfg.displayName} — ${cfg.descriptor}` : `${title} — ${cfg.displayName}`);
   const nav = cfg.nav
     .map((n) => `<a href="${url(n.href)}"${current === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`)
@@ -73,6 +73,7 @@ function page({ path, title, description, body, current, titleOverride, ogImage,
 <title>${esc(fullTitle)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${site}${url(path)}">
+${noindex ? '<meta name="robots" content="noindex, follow">' : ''}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(cfg.displayName)}">
 <meta property="og:title" content="${esc(fullTitle)}">
@@ -409,6 +410,30 @@ pages.push(
   })
 );
 
+// Contact card page (QR code target) and vCard
+if (cfg.card) {
+  const k = cfg.card;
+  const vcf = ['BEGIN:VCARD', 'VERSION:3.0', `N:${k.family};${k.given};;;`, `FN:${k.name}`, `ORG:${cfg.displayName}`, `TITLE:${k.title}`,
+    `TEL;TYPE=CELL,VOICE:${k.phoneE164}`, `EMAIL;TYPE=INTERNET:${k.email}`, `URL:${site}`, `NOTE:${cfg.descriptor}`, 'END:VCARD'].join('\r\n') + '\r\n';
+  mkdirSync(join(out, k.path), { recursive: true });
+  writeFileSync(join(out, k.path, k.vcfFile), vcf);
+  pages.push(page({
+    path: k.path, current: '', title: k.name, noindex: true,
+    description: `${k.name}, ${k.title} at ${cfg.displayName}. Save the contact.`,
+    body: `
+<section class="hero"><div class="wrap"><div class="vcard">
+  <div class="lockup" style="font-size:22px">${mark}<span class="wm">${esc(cfg.name)}</span></div>
+  <div><h1>${esc(k.name)}</h1><p class="muted">${esc(k.title)} · ${esc(cfg.descriptor)}</p></div>
+  <div class="vlines mono">
+    <a href="tel:${k.phoneE164}">${esc(k.phone)}</a>
+    <a href="${mailto}">${esc(k.email)}</a>
+    <a href="${url('/')}">${esc(cfg.domain)}</a>
+  </div>
+  <div class="btns"><a class="btn primary" href="${url(k.path + k.vcfFile)}" download>Save contact</a><a class="btn" href="${url('/')}">Visit the site</a></div>
+</div></div></section>`,
+  }));
+}
+
 // 404
 mkdirSync(out, { recursive: true });
 page({
@@ -432,7 +457,7 @@ if (!DRAFT) {
 writeFileSync(join(out, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${site}${url('/sitemap.xml')}\n`);
 writeFileSync(
   join(out, 'sitemap.xml'),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.filter((p) => !cfg.card || p !== cfg.card.path)
     .map((p) => `  <url><loc>${site}${url(p)}</loc><lastmod>${new Date().toISOString().slice(0, 10)}</lastmod><priority>${p === '/' || p.startsWith('/tools/') && p !== '/tools/' ? '1.0' : '0.7'}</priority></url>`)
     .join('\n')}\n</urlset>\n`
 );

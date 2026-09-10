@@ -216,6 +216,12 @@ section + section { border-top: 1px solid var(--line); }
 .qa { display: grid; gap: 4px; }
 .qa h3 { font-size: 16px; }
 
+/* Contact card page (QR target) */
+.vcard { display: grid; gap: 18px; max-width: 480px; }
+.vlines { display: grid; gap: 6px; font-size: 15px; }
+.vlines a { text-decoration: none; }
+.vlines a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+
 /* Contact strip */
 .contact { border-top: 1px solid var(--line); }
 .contact .inner { display: grid; gap: 8px; max-width: var(--measure); }

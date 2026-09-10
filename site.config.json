@@ -78,5 +78,16 @@
       "status": "request",
       "screenshots": []
     }
-  ]
+  ],
+  "card": {
+    "name": "Semih Genç",
+    "given": "Semih",
+    "family": "Genç",
+    "title": "Founder",
+    "phone": "+90 505 654 37 42",
+    "phoneE164": "+905056543742",
+    "email": "hello@linebuffer.com",
+    "vcfFile": "semih-genc.vcf",
+    "path": "/v/"
+  }
 }
