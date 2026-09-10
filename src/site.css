@@ -186,6 +186,12 @@ section + section { border-top: 1px solid var(--line); }
 .features .k { font-weight: 600; }
 @media (max-width: 640px) { .features .row { grid-template-columns: 1fr; gap: 4px; } }
 
+/* Key points under a tool's lede */
+.points { list-style: none; padding: 0; display: grid; gap: 6px; max-width: 64ch; }
+.points li { padding-left: 14px; position: relative; color: var(--ink-2); font-size: 15px; }
+.points li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 6px; height: 6px; background: var(--accent); }
+.points strong { color: var(--ink); font-weight: 600; }
+
 /* Ways to run a tool: three options side by side */
 .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 18px 28px; margin-top: 6px; max-width: 900px; }
 .opt { border-top: 1px solid var(--line-strong); padding-top: 12px; display: grid; gap: 8px; align-content: start; justify-items: start; }

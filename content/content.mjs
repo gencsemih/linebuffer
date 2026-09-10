@@ -151,8 +151,13 @@ export const tools = {
         ],
       },
       summary: 'Design an on-screen-display menu on a canvas and export a verified, fixed-latency Verilog overlay module with its testbench.',
-      lede:
-        'Lay out an on-screen-display menu on a canvas the size of your video’s active area, try the menu with on-screen buttons, and export a synthesizable Verilog or SystemVerilog overlay module: video stream in, the same stream out with the OSD drawn on it, a fixed clock latency, and no frame or line buffer. The export includes a self-checking testbench whose golden frames come from the same renderer you designed with.',
+      lede: 'Design an on-screen display visually, try it live, and export it as verified RTL.',
+      points: [
+        ['Design', 'Text, readouts, markers, bars, icons and a menu on a canvas the size of your video’s active area.'],
+        ['Simulate', 'Run the menu with on-screen buttons; it is the same state machine the RTL is generated from.'],
+        ['Export', 'A synthesizable Verilog or SystemVerilog overlay: video in, the same stream out with the OSD on it, fixed latency, no frame or line buffer.'],
+        ['Verify', 'A self-checking testbench whose golden frames come from the renderer you designed with.'],
+      ],
       features: [
         ['Designer', 'Canvas over a sample frame (PNG, PGM, PPM or a test pattern), element list with z-order, inspector, direct manipulation, screens, pixel grid and zoom.'],
         ['Elements', 'Static text, numeric readout, enumerated text, rectangle, line, crosshair, bitmap and icon, bar, and the menu list; blend modes opaque, keyed, invert and half; visibility conditions with blink; grayscale or RGB.'],
