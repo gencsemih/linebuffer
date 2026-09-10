@@ -167,7 +167,7 @@ const toolCards = (list) => `<div class="tools">${list
     const c = content.tools.byName[t.slug];
     const status = t.status === 'browser' ? '<span class="pill acc">free in the browser</span>' : '<span class="pill">on request</span>';
     const shot = t.hero
-      ? `<a class="tool-shot" href="${url('/tools/' + t.slug + '/')}" tabindex="-1" aria-hidden="true"><img src="${asset(`/img/${t.slug}/${t.hero}-750.webp`)}" srcset="${asset(`/img/${t.slug}/${t.hero}-750.webp`)} 750w, ${asset(`/img/${t.slug}/${t.hero}.webp`)} 1500w" sizes="(max-width: 720px) 100vw, 60vw" width="750" height="475" loading="lazy" alt=""></a>`
+      ? `<a class="tool-shot" href="${url('/tools/' + t.slug + '/')}" tabindex="-1" aria-hidden="true"><img src="${asset(`/img/${t.slug}/${t.hero}-750.webp`)}" srcset="${asset(`/img/${t.slug}/${t.hero}-750.webp`)} 750w, ${asset(`/img/${t.slug}/${t.hero}.webp`)} 1500w, ${asset(`/img/${t.slug}/${t.hero}-3000.webp`)} 3000w" sizes="(max-width: 720px) 100vw, 60vw" width="750" height="475" loading="lazy" alt=""></a>`
       : `<div class="tool-shot tool-shot-empty" aria-hidden="true">${mark}</div>`;
     return `<article class="tool">
   ${shot}
@@ -312,7 +312,7 @@ for (const t of tools) {
   const gallery = t.screenshots.length
     ? `<section><div class="wrap"><div class="sec-head"><h2>Screens</h2></div><div class="gallery">${t.screenshots
         .map(
-          (s) => `<figure><a href="${asset(`/img/${t.slug}/${s.file}.webp`)}"><img src="${asset(`/img/${t.slug}/${s.file}-750.webp`)}" srcset="${asset(`/img/${t.slug}/${s.file}-750.webp`)} 750w, ${asset(`/img/${t.slug}/${s.file}.webp`)} 1500w" sizes="(max-width: 720px) 100vw, 50vw" width="750" height="475" loading="lazy" alt="${esc(t.name)}: ${esc(s.caption)}"></a><figcaption>${esc(s.caption)}</figcaption></figure>`
+          (s) => `<figure><a href="${asset(`/img/${t.slug}/${s.file}-3000.webp`)}"><img src="${asset(`/img/${t.slug}/${s.file}-750.webp`)}" srcset="${asset(`/img/${t.slug}/${s.file}-750.webp`)} 750w, ${asset(`/img/${t.slug}/${s.file}.webp`)} 1500w, ${asset(`/img/${t.slug}/${s.file}-3000.webp`)} 3000w" sizes="(max-width: 720px) 100vw, 33vw" width="750" height="475" loading="lazy" alt="${esc(t.name)}: ${esc(s.caption)}"></a><figcaption>${esc(s.caption)}</figcaption></figure>`
         )
         .join('')}</div></div></section>`
     : '';
@@ -339,7 +339,7 @@ for (const t of tools) {
     <p class="lede">${esc(c.lede)}</p>
     ${c.paragraphs ? `<div class="tool-paras">${c.paragraphs.map((t) => `<p class="muted">${esc(t)}</p>`).join('')}</div>` : ''}
   </div>
-  ${t.hero ? `<a class="tool-hero-img" href="${asset(`/img/${t.slug}/${t.hero}.webp`)}"><img src="${asset(`/img/${t.slug}/${t.hero}-750.webp`)}" srcset="${asset(`/img/${t.slug}/${t.hero}-750.webp`)} 750w, ${asset(`/img/${t.slug}/${t.hero}.webp`)} 1500w" sizes="(max-width: 860px) 100vw, 45vw" width="750" height="475" alt="${esc(t.name)}: the designer with the menu open"></a>` : ''}
+  ${t.hero ? `<a class="tool-hero-img" href="${asset(`/img/${t.slug}/${t.hero}-3000.webp`)}"><img src="${asset(`/img/${t.slug}/${t.hero}-750.webp`)}" srcset="${asset(`/img/${t.slug}/${t.hero}-750.webp`)} 750w, ${asset(`/img/${t.slug}/${t.hero}.webp`)} 1500w, ${asset(`/img/${t.slug}/${t.hero}-3000.webp`)} 3000w" sizes="(max-width: 860px) 100vw, 45vw" width="750" height="475" alt="${esc(t.name)}: the designer with the menu open"></a>` : ''}
   ${c.options ? '' : `<div class="btns">${cta}</div>`}
   ${DRAFT && t.rightsNote ? `<p class="small" style="color:var(--accent)">Draft note: ${esc(t.rightsNote)}</p>` : ''}
 </div></div></section>
