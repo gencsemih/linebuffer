@@ -284,7 +284,7 @@ const IO_DIAGRAM = {
   <text class="s" x="40" y="282">menu buttons</text>
   <text class="b" x="420" y="100" text-anchor="middle">OSD overlay</text>
   <text class="s" x="420" y="117" text-anchor="middle">generated RTL</text>
-  <text class="s" x="420" y="196" text-anchor="middle">fixed 8-cycle latency</text>
+  <text class="s" x="420" y="196" text-anchor="middle">fixed clock latency</text>
   <text class="s" x="420" y="212" text-anchor="middle">no frame buffer</text>
   <text class="b" x="520" y="100">Video stream out</text>
   <text class="s" x="520" y="176">same format and timing,</text>
