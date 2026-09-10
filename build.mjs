@@ -314,9 +314,15 @@ for (const t of tools) {
         )
         .join('')}</div></div></section>`
     : '';
-  const cta =
-    t.status === 'browser'
-      ? `<a class="btn primary" href="${url(t.app)}">Open in the browser</a><a class="btn" href="${mailto}?subject=${encodeURIComponent(t.name)}">Ask about desktop and CLI</a>`
+  const cta = c.options
+    ? `<div class="opts">${c.options
+        .map((o, i) => {
+          const href = o.href === 'app' ? url(t.app) : o.href || `${mailto}?subject=${encodeURIComponent(o.mail || t.name)}`;
+          return `<div class="opt"><h3>${esc(o.title)}</h3><p class="muted small">${esc(o.body)}</p><a class="btn${i === 0 ? ' primary' : ''}" href="${href}">${esc(o.label)}</a></div>`;
+        })
+        .join('')}</div>`
+    : t.status === 'browser'
+      ? `<a class="btn primary" href="${url(t.app)}">Open in the browser</a>`
       : `<a class="btn primary" href="${mailto}?subject=${encodeURIComponent(t.name)}">Ask for access</a>`;
   pages.push(
     page({
@@ -328,7 +334,7 @@ for (const t of tools) {
 <section class="hero"><div class="wrap"><div class="tool-hero">
   <div class="head"><h1>${esc(t.name)}</h1><span class="ver">v${esc(t.version)}</span>${t.status === 'browser' ? '<span class="pill acc">runs in the browser</span>' : '<span class="pill">on request</span>'}</div>
   <p class="lede">${esc(c.lede)}</p>
-  <div class="btns">${cta}</div>
+  ${c.options ? cta : `<div class="btns">${cta}</div>`}
   ${DRAFT && t.rightsNote ? `<p class="small" style="color:var(--accent)">Draft note: ${esc(t.rightsNote)}</p>` : ''}
 </div></div></section>
 ${ioSection(t)}

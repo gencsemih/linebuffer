@@ -186,6 +186,14 @@ section + section { border-top: 1px solid var(--line); }
 .features .k { font-weight: 600; }
 @media (max-width: 640px) { .features .row { grid-template-columns: 1fr; gap: 4px; } }
 
+/* Ways to run a tool: three options side by side */
+.opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 18px 28px; margin-top: 6px; max-width: 900px; }
+.opt { border-top: 1px solid var(--line-strong); padding-top: 12px; display: grid; gap: 8px; align-content: start; justify-items: start; }
+.opt h3 { font-size: 17px; }
+.opt p { justify-self: stretch; }
+.opt .btn { margin-top: 4px; }
+.tool-hero { max-width: 900px; }
+
 /* Interface diagram */
 .io-wrap { max-width: 760px; color: var(--ink); }
 .io-wrap svg { width: 100%; height: auto; display: block; }

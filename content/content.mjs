@@ -137,6 +137,11 @@ export const tools = {
     'Built for problems that kept coming back, client after client. Each tool solves one of them once, exactly.',
   byName: {
     'osd-design-studio': {
+      options: [
+        { title: 'Browser', body: 'Nothing to install. Projects stay in browser storage until you save them as a file; export downloads a zip.', label: 'Open in the browser', href: 'app' },
+        { title: 'Desktop', body: 'A native window with real file dialogs, for Linux and Windows. Same renderer, same export, works offline.', label: 'Request the desktop build', mail: 'OSD Design Studio desktop build' },
+        { title: 'Command line', body: 'Headless export, render, verify, info and validate. Runs the generated testbench under Verilator, so it fits a regression flow.', label: 'Request the CLI', mail: 'OSD Design Studio CLI' },
+      ],
       io: {
         title: 'What the generated module connects to',
         notes: [
