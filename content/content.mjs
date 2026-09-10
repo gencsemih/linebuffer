@@ -217,7 +217,7 @@ export const about = {
   name: {
     title: 'Why the name',
     body:
-      'A line buffer holds exactly one line of an image, processes it and passes it on. It is the smallest structure that makes streaming image processing possible, and a fair description of how we like to build: no more memory than the job needs, and a latency you can state in cycles.',
+      'A line buffer holds exactly one line of an image, processes it and passes it on. It is the smallest structure that makes streaming image processing possible, and a fair description of how we like to work: the clever solution over the heavy one, resources sized to the job, and designs that reach silicon or the FPGA on time and on budget.',
   },
   contact: {
     title: 'Contact',
