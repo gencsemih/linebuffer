@@ -30,16 +30,18 @@ const DUR = 2.6, PH = [0.40, 0.35, 0.35, 0.50, 0.25, 0.35, 0.35, 0.05];
 const K = PH.reduce((a, p) => (a.push(+(a[a.length - 1] + p / DUR).toFixed(4)), a), [0]);
 const kt = K.slice(0, -1).join(';');
 const seq = (k) => { const st = (p) => (k < p ? ['I', 1] : k === p ? ['P', 1] : ['G', 0.18]); return [st(2), st(3), st(4), ['I', 1], ['I', 1], st(0), st(1), st(2)]; };
-const animCells = () => {
-  const ink = 'currentColor', gold = 'var(--accent)';
+const animCells = ({ repeat = '1', begin = '0.4s', freeze = true } = {}) => {
+  // SMIL `values` cannot use CSS variables (Chrome leaves the cell unpainted), so the pointer colour is literal here.
+  const ink = 'currentColor', gold = '#D9A521';
+  const rep = `begin="${begin}" repeatCount="${repeat}"${freeze ? ' fill="freeze"' : ''}`;
   let o = '';
   for (let i = 0; i < 5; i++) o += `<rect x="${8 * i}" y="0" width="6" height="6" fill="currentColor"/>`;
   for (let i = 0; i < 5; i++) {
     const sq = seq(i);
-    o += `<rect x="${8 * i}" y="8" width="6" height="6" fill="currentColor"><animate attributeName="fill" values="${sq.map((v) => (v[0] === 'P' ? gold : ink)).join(';')}" keyTimes="${kt}" calcMode="discrete" dur="${DUR}s" begin="0.4s" repeatCount="1" fill="freeze"/><animate attributeName="fill-opacity" values="${sq.map((v) => v[1]).join(';')}" keyTimes="${kt}" calcMode="discrete" dur="${DUR}s" begin="0.4s" repeatCount="1" fill="freeze"/></rect>`;
+    o += `<rect x="${8 * i}" y="8" width="6" height="6" fill="currentColor"><animate attributeName="fill" values="${sq.map((v) => (v[0] === 'P' ? gold : ink)).join(';')}" keyTimes="${kt}" calcMode="discrete" dur="${DUR}s" ${rep}/><animate attributeName="fill-opacity" values="${sq.map((v) => v[1]).join(';')}" keyTimes="${kt}" calcMode="discrete" dur="${DUR}s" ${rep}/></rect>`;
   }
   for (let i = 0; i < 5; i++) o += `<rect x="${8 * i}" y="16" width="6" height="6" fill="currentColor" fill-opacity="0.18"/>`;
-  o += `<animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 -8;0 0;0 0" keyTimes="0;${K[4]};${K[5]};${K[5]};1" calcMode="linear" dur="${DUR}s" begin="0.4s" repeatCount="1" fill="freeze"/>`;
+  o += `<animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 -8;0 0;0 0" keyTimes="0;${K[4]};${K[5]};${K[5]};1" calcMode="linear" dur="${DUR}s" ${rep}/>`;
   return o;
 };
 const markAnimated = `<svg class="mk-anim" viewBox="0 0 38 14" aria-hidden="true" focusable="false"><defs><clipPath id="lbclip"><rect width="38" height="14"/></clipPath></defs><g clip-path="url(#lbclip)"><g>${animCells()}</g></g></svg>`;
@@ -260,7 +262,7 @@ ${contactStrip('A problem that keeps coming back in your flow?', 'Most of these 
 const IO_DIAGRAM = {
   'osd-design-studio': `<svg class="io" viewBox="0 0 770 300" role="img" aria-label="Inputs: video stream and bindings. Output: the same video stream with the OSD drawn on it.">
   <style>.io text{font-family:inherit;font-size:13px;fill:currentColor}.io .b{font-weight:600;font-size:14px}.io .s{font-size:12px;opacity:.72}.io .m{font-family:var(--mono);font-size:11px;opacity:.8}</style>
-  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+  <defs><clipPath id="ioclip"><rect width="38" height="14"/></clipPath><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
   <g fill="none" stroke="currentColor" stroke-width="1.5">
     <path d="M420 30V70" marker-end="url(#ah)"/>
     <path d="M40 110H328" marker-end="url(#ah)"/>
@@ -272,7 +274,8 @@ const IO_DIAGRAM = {
   <g fill="currentColor"><rect x="60" y="97" width="8" height="8"/><rect x="72" y="97" width="8" height="8"/><rect x="84" y="97" width="8" height="8"/><rect x="96" y="97" width="8" height="8"/><rect x="108" y="97" width="8" height="8"/><rect x="120" y="97" width="8" height="8"/></g>
   <g fill="currentColor"><rect x="570" y="137" width="8" height="8"/><rect x="582" y="137" width="8" height="8"/><rect x="594" y="137" width="8" height="8"/><rect x="606" y="137" width="8" height="8"/><rect x="618" y="137" width="8" height="8"/><rect x="630" y="137" width="8" height="8"/></g>
   <g fill="none" stroke-width="1.5" style="stroke:var(--accent)"><rect x="648" y="118" width="46" height="26"/><path d="M654 126h20M654 132h14M654 138h26"/></g>
-  <g transform="translate(382 138) scale(2)"><rect x="0" y="0" width="6" height="6" fill="currentColor"/><rect x="8" y="0" width="6" height="6" fill="currentColor"/><rect x="16" y="0" width="6" height="6" fill="currentColor"/><rect x="24" y="0" width="6" height="6" fill="currentColor"/><rect x="32" y="0" width="6" height="6" fill="currentColor"/><rect x="0" y="8" width="6" height="6" fill="currentColor"/><rect x="8" y="8" width="6" height="6" fill="currentColor"/><rect x="16" y="8" width="6" height="6" style="fill:var(--accent)"/><rect x="24" y="8" width="6" height="6" fill="currentColor" opacity=".18"/><rect x="32" y="8" width="6" height="6" fill="currentColor" opacity=".18"/></g>
+  <g class="mk-anim" transform="translate(382 138) scale(2)" clip-path="url(#ioclip)"><g>${animCells({ repeat: 'indefinite', begin: '0s', freeze: false })}</g></g>
+  <g class="mk-static" transform="translate(382 138) scale(2)"><rect x="0" y="0" width="6" height="6" fill="currentColor"/><rect x="8" y="0" width="6" height="6" fill="currentColor"/><rect x="16" y="0" width="6" height="6" fill="currentColor"/><rect x="24" y="0" width="6" height="6" fill="currentColor"/><rect x="32" y="0" width="6" height="6" fill="currentColor"/><rect x="0" y="8" width="6" height="6" fill="currentColor"/><rect x="8" y="8" width="6" height="6" fill="currentColor"/><rect x="16" y="8" width="6" height="6" style="fill:var(--accent)"/><rect x="24" y="8" width="6" height="6" fill="currentColor" opacity=".18"/><rect x="32" y="8" width="6" height="6" fill="currentColor" opacity=".18"/></g>
   <text class="m" x="428" y="52">clk</text>
   <text class="b" x="40" y="86">Video stream in</text>
   <text class="s" x="40" y="130">parallel video: pclk, hsync, vsync, de, data</text>

@@ -11,12 +11,14 @@
         --bg: #0b0f18; --panel: #151b2b; --panel2: #1b2334; --border: #2a3348;
         --text: #dce3ee; --dim: #8a94a8; --accent: #4f9dff; --warn: #f9c74f; --err: #ef476f; --ok: #5ed39a;
         --canvas-bg: #0f1420;
+        --brand-accent: #D9A521;
       }
       body.theme-light {
         color-scheme: light;
         --bg: #f4f6fa; --panel: #ffffff; --panel2: #eef1f7; --border: #d3dae6;
         --text: #1b2733; --dim: #5f6b7e; --accent: #2f7ae5; --warn: #b7791f; --err: #c1274f; --ok: #1f8f5b;
         --canvas-bg: #e6eaf2;
+        --brand-accent: #CC9A1E;
       }
       * { box-sizing: border-box; }
       [hidden] { display: none !important; }
@@ -47,11 +49,12 @@
       .resize-grip[data-edge="south-east"] { bottom: 0; right: 0; width: 8px; height: 8px; cursor: nwse-resize; }
       .header-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
       .brand { display: flex; align-items: center; gap: 10px; }
-      .brand .logo svg { height: 20px; width: auto; display: block; }
-      /* Linebuffer lockup: one variant per theme (the wordmark colour is baked into each file). */
-      .brand .logo-light { display: none; }
-      body.theme-light .brand .logo-light { display: inline; }
-      body.theme-light .brand .logo-dark { display: none; }
+      /* linebuffer lockup: looping mark + wordmark; the static mark replaces the animation under reduced motion. */
+      .brand .logo { display: inline-flex; align-items: center; gap: 0.36em; font-size: 17px; color: var(--text); }
+      .brand .logo svg { height: 0.44em; width: auto; display: block; }
+      .brand .logo .mk-static { display: none; }
+      @media (prefers-reduced-motion: reduce) { .brand .logo .mk-anim { display: none; } .brand .logo .mk-static { display: block; } }
+      .brand .logo .wm { font-weight: 700; letter-spacing: -0.025em; line-height: 1; }
       .brand .sep { color: var(--dim); font-size: 14px; }
       .brand h1 { font-size: 15px; margin: 0; font-weight: 600; letter-spacing: 0.2px; }
       .brand .version { color: var(--dim); font-size: 11px; }
@@ -206,121 +209,7 @@
       <header>
         <div class="header-row" id="titleBarRow">
           <div class="brand">
-            <span class="logo"><span class="logo-dark"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   viewBox="-6.00 -7.30 152.42 27.50"
-   width="152.42" height="27.50"
-   role="img"
-   aria-label="linebuffer lockup, dark"
-   version="1.1"
-   id="svg10"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs10" />
-  <path
-     id="rect1"
-     style="fill:#dce3ee"
-     d="M 0,0 H 6 V 6 H 0 Z" />
-  <path
-     id="rect2"
-     style="fill:#dce3ee"
-     d="m 8,0 h 6 V 6 H 8 Z" />
-  <path
-     id="rect3"
-     style="fill:#dce3ee"
-     d="m 16,0 h 6 v 6 h -6 z" />
-  <path
-     id="rect4"
-     style="fill:#dce3ee"
-     d="m 24,0 h 6 v 6 h -6 z" />
-  <path
-     id="rect5"
-     style="fill:#dce3ee"
-     d="m 32,0 h 6 v 6 h -6 z" />
-  <path
-     id="rect6"
-     style="fill:#dce3ee"
-     d="m 0,8 h 6 v 6 H 0 Z" />
-  <path
-     id="rect7"
-     style="fill:#dce3ee"
-     d="m 8,8 h 6 v 6 H 8 Z" />
-  <path
-     id="rect8"
-     style="fill:#d9a521"
-     d="m 16,8 h 6 v 6 h -6 z" />
-  <path
-     id="rect9"
-     style="opacity:0.18;fill:#dce3ee"
-     d="m 24,8 h 6 v 6 h -6 z" />
-  <path
-     id="rect10"
-     style="opacity:0.18;fill:#dce3ee"
-     d="m 32,8 h 6 v 6 h -6 z" />
-  <path
-     d="M 50.54,14 H 47.56 V -1.2 h 2.98 z m 4.120006,-15.2 q 0.66,0 1.14,0.32 0.48,0.3 0.48,1.14 0,0.82 -0.48,1.14 -0.48,0.32 -1.14,0.32 -0.68,0 -1.16,-0.32 -0.46,-0.32 -0.46,-1.14 0,-0.84 0.46,-1.14 0.48,-0.32 1.16,-0.32 z m 1.48,4.28 V 14 h -2.98 V 3.08 Z m 8.820006,-0.2 q 1.76,0 2.82,0.96 1.06,0.94 1.06,3.04 V 14 h -2.98 V 7.62 q 0,-1.18 -0.42,-1.76 -0.42,-0.6 -1.34,-0.6 -1.36,0 -1.86,0.94 -0.5,0.92 -0.5,2.66 V 14 h -2.98 V 3.08 h 2.28 l 0.4,1.4 h 0.16 q 0.52,-0.84 1.42,-1.22 0.92,-0.38 1.94,-0.38 z m 10.939992,0 q 2.26,0 3.58,1.3 1.32,1.28 1.32,3.66 v 1.44 h -7.04 q 0.04,1.26 0.74,1.98 0.72,0.72 1.98,0.72 1.06,0 1.92,-0.2 0.86,-0.22 1.78,-0.66 v 2.3 q -0.8,0.4 -1.7,0.58 -0.88,0.2 -2.14,0.2 -1.64,0 -2.9,-0.6 -1.26,-0.62 -1.98,-1.86 -0.72,-1.24 -0.72,-3.12 0,-1.92 0.64,-3.18 0.66,-1.28 1.82,-1.92 1.16,-0.64 2.7,-0.64 z m 0.02,2.12 q -0.86,0 -1.44,0.56 -0.56,0.56 -0.66,1.74 h 4.18 q -0.02,-1 -0.52,-1.64 -0.5,-0.66 -1.56,-0.66 z m 9.779992,-2.66 q 0,0.62 -0.04,1.22 -0.04,0.6 -0.08,0.94 h 0.12 q 0.44,-0.68 1.18,-1.14 0.74,-0.48 1.92,-0.48 1.84,0 2.98,1.44 1.14,1.42 1.14,4.2 0,2.8 -1.16,4.24 -1.16,1.44 -3.04,1.44 -1.2,0 -1.9,-0.42 -0.68,-0.44 -1.12,-0.98 h -0.2 l -0.5,1.2 h -2.28 V -1.2 h 2.98 z m 2.14,2.92 q -1.16,0 -1.64,0.72 -0.46,0.72 -0.5,2.2 V 8.5 q 0,1.58 0.46,2.44 0.48,0.84 1.72,0.84 0.92,0 1.46,-0.84 0.54,-0.86 0.54,-2.46 0,-1.6 -0.56,-2.4 -0.54,-0.82 -1.48,-0.82 z M 104.89998,3.08 V 14 h -2.28 l -0.4,-1.4 h -0.16 q -0.52,0.84 -1.44,1.22 -0.899996,0.38 -1.919996,0.38 -1.76,0 -2.82,-0.94 -1.06,-0.96 -1.06,-3.06 V 3.08 h 2.98 v 6.38 q 0,1.16 0.42,1.76 0.42,0.6 1.34,0.6 1.359996,0 1.859996,-0.92 0.5,-0.94 0.5,-2.68 V 3.08 Z m 8.66,2.24 h -2.58 V 14 h -2.98 V 5.32 h -1.64 V 3.88 l 1.64,-0.8 v -0.8 q 0,-1.4 0.46,-2.16 0.48,-0.78 1.34,-1.1 0.88,-0.32 2.06,-0.32 0.88,0 1.58,0.14 0.72,0.14 1.16,0.32 l -0.76,2.18 q -0.34,-0.1 -0.74,-0.18 -0.4,-0.1 -0.92,-0.1 -0.62,0 -0.92,0.38 -0.28,0.38 -0.28,0.96 v 0.68 h 2.58 z m 7.74,0 h -2.58 V 14 h -2.98 V 5.32 h -1.64 V 3.88 l 1.64,-0.8 v -0.8 q 0,-1.4 0.46,-2.16 0.48,-0.78 1.34,-1.1 0.88,-0.32 2.06,-0.32 0.88,0 1.58,0.14 0.72,0.14 1.16,0.32 l -0.76,2.18 q -0.34,-0.1 -0.74,-0.18 -0.4,-0.1 -0.92,-0.1 -0.62,0 -0.92,0.38 -0.28,0.38 -0.28,0.96 v 0.68 h 2.58 z m 5.2,-2.44 q 2.26,0 3.58,1.3 1.32,1.28 1.32,3.66 v 1.44 h -7.04 q 0.04,1.26 0.74,1.98 0.72,0.72 1.98,0.72 1.06,0 1.92,-0.2 0.86,-0.22 1.78,-0.66 v 2.3 q -0.8,0.4 -1.7,0.58 -0.88,0.2 -2.14,0.2 -1.64,0 -2.9,-0.6 -1.26,-0.62 -1.98,-1.86 -0.72,-1.24 -0.72,-3.12 0,-1.92 0.64,-3.18 0.66,-1.28 1.82,-1.92 1.16,-0.64 2.7,-0.64 z m 0.02,2.12 q -0.86,0 -1.44,0.56 -0.56,0.56 -0.66,1.74 h 4.18 q -0.02,-1 -0.52,-1.64 -0.5,-0.66 -1.56,-0.66 z m 12.89999,-2.12 q 0.22,0 0.52,0.02 0.3,0.02 0.48,0.06 l -0.22,2.8 q -0.14,-0.04 -0.42,-0.06 -0.26,-0.04 -0.46,-0.04 -0.76,0 -1.46,0.28 -0.7,0.26 -1.14,0.86 -0.42,0.6 -0.42,1.64 V 14 h -2.98 V 3.08 h 2.26 l 0.44,1.84 h 0.14 q 0.48,-0.84 1.32,-1.44 0.84,-0.6 1.94,-0.6 z"
-     id="text10"
-     style="font-weight:700;font-size:20px;font-family:Overpass;letter-spacing:-0.5;fill:#dce3ee"
-     aria-label="linebuffer" />
-</svg></span><span class="logo-light"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
-   viewBox="-6.00 -7.30 152.42 27.50"
-   width="152.42" height="27.50"
-   role="img"
-   aria-label="linebuffer lockup"
-   version="1.1"
-   id="svg10"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs10" />
-  <path
-     id="rect1"
-     style="fill:#1b2733"
-     d="M 0,0 H 6 V 6 H 0 Z" />
-  <path
-     id="rect2"
-     style="fill:#1b2733"
-     d="m 8,0 h 6 V 6 H 8 Z" />
-  <path
-     id="rect3"
-     style="fill:#1b2733"
-     d="m 16,0 h 6 v 6 h -6 z" />
-  <path
-     id="rect4"
-     style="fill:#1b2733"
-     d="m 24,0 h 6 v 6 h -6 z" />
-  <path
-     id="rect5"
-     style="fill:#1b2733"
-     d="m 32,0 h 6 v 6 h -6 z" />
-  <path
-     id="rect6"
-     style="fill:#1b2733"
-     d="m 0,8 h 6 v 6 H 0 Z" />
-  <path
-     id="rect7"
-     style="fill:#1b2733"
-     d="m 8,8 h 6 v 6 H 8 Z" />
-  <path
-     id="rect8"
-     style="fill:#cc9a1e"
-     d="m 16,8 h 6 v 6 h -6 z" />
-  <path
-     id="rect9"
-     style="opacity:0.18;fill:#1b2733"
-     d="m 24,8 h 6 v 6 h -6 z" />
-  <path
-     id="rect10"
-     style="opacity:0.18;fill:#1b2733"
-     d="m 32,8 h 6 v 6 h -6 z" />
-  <path
-     d="M 50.54,14 H 47.56 V -1.2 h 2.98 z m 4.120006,-15.2 q 0.66,0 1.14,0.32 0.48,0.3 0.48,1.14 0,0.82 -0.48,1.14 -0.48,0.32 -1.14,0.32 -0.68,0 -1.16,-0.32 -0.46,-0.32 -0.46,-1.14 0,-0.84 0.46,-1.14 0.48,-0.32 1.16,-0.32 z m 1.48,4.28 V 14 h -2.98 V 3.08 Z m 8.820006,-0.2 q 1.76,0 2.82,0.96 1.06,0.94 1.06,3.04 V 14 h -2.98 V 7.62 q 0,-1.18 -0.42,-1.76 -0.42,-0.6 -1.34,-0.6 -1.36,0 -1.86,0.94 -0.5,0.92 -0.5,2.66 V 14 h -2.98 V 3.08 h 2.28 l 0.4,1.4 h 0.16 q 0.52,-0.84 1.42,-1.22 0.92,-0.38 1.94,-0.38 z m 10.939992,0 q 2.26,0 3.58,1.3 1.32,1.28 1.32,3.66 v 1.44 h -7.04 q 0.04,1.26 0.74,1.98 0.72,0.72 1.98,0.72 1.06,0 1.92,-0.2 0.86,-0.22 1.78,-0.66 v 2.3 q -0.8,0.4 -1.7,0.58 -0.88,0.2 -2.14,0.2 -1.64,0 -2.9,-0.6 -1.26,-0.62 -1.98,-1.86 -0.72,-1.24 -0.72,-3.12 0,-1.92 0.64,-3.18 0.66,-1.28 1.82,-1.92 1.16,-0.64 2.7,-0.64 z m 0.02,2.12 q -0.86,0 -1.44,0.56 -0.56,0.56 -0.66,1.74 h 4.18 q -0.02,-1 -0.52,-1.64 -0.5,-0.66 -1.56,-0.66 z m 9.779992,-2.66 q 0,0.62 -0.04,1.22 -0.04,0.6 -0.08,0.94 h 0.12 q 0.44,-0.68 1.18,-1.14 0.74,-0.48 1.92,-0.48 1.84,0 2.98,1.44 1.14,1.42 1.14,4.2 0,2.8 -1.16,4.24 -1.16,1.44 -3.04,1.44 -1.2,0 -1.9,-0.42 -0.68,-0.44 -1.12,-0.98 h -0.2 l -0.5,1.2 h -2.28 V -1.2 h 2.98 z m 2.14,2.92 q -1.16,0 -1.64,0.72 -0.46,0.72 -0.5,2.2 V 8.5 q 0,1.58 0.46,2.44 0.48,0.84 1.72,0.84 0.92,0 1.46,-0.84 0.54,-0.86 0.54,-2.46 0,-1.6 -0.56,-2.4 -0.54,-0.82 -1.48,-0.82 z M 104.89998,3.08 V 14 h -2.28 l -0.4,-1.4 h -0.16 q -0.52,0.84 -1.44,1.22 -0.899996,0.38 -1.919996,0.38 -1.76,0 -2.82,-0.94 -1.06,-0.96 -1.06,-3.06 V 3.08 h 2.98 v 6.38 q 0,1.16 0.42,1.76 0.42,0.6 1.34,0.6 1.359996,0 1.859996,-0.92 0.5,-0.94 0.5,-2.68 V 3.08 Z m 8.66,2.24 h -2.58 V 14 h -2.98 V 5.32 h -1.64 V 3.88 l 1.64,-0.8 v -0.8 q 0,-1.4 0.46,-2.16 0.48,-0.78 1.34,-1.1 0.88,-0.32 2.06,-0.32 0.88,0 1.58,0.14 0.72,0.14 1.16,0.32 l -0.76,2.18 q -0.34,-0.1 -0.74,-0.18 -0.4,-0.1 -0.92,-0.1 -0.62,0 -0.92,0.38 -0.28,0.38 -0.28,0.96 v 0.68 h 2.58 z m 7.74,0 h -2.58 V 14 h -2.98 V 5.32 h -1.64 V 3.88 l 1.64,-0.8 v -0.8 q 0,-1.4 0.46,-2.16 0.48,-0.78 1.34,-1.1 0.88,-0.32 2.06,-0.32 0.88,0 1.58,0.14 0.72,0.14 1.16,0.32 l -0.76,2.18 q -0.34,-0.1 -0.74,-0.18 -0.4,-0.1 -0.92,-0.1 -0.62,0 -0.92,0.38 -0.28,0.38 -0.28,0.96 v 0.68 h 2.58 z m 5.2,-2.44 q 2.26,0 3.58,1.3 1.32,1.28 1.32,3.66 v 1.44 h -7.04 q 0.04,1.26 0.74,1.98 0.72,0.72 1.98,0.72 1.06,0 1.92,-0.2 0.86,-0.22 1.78,-0.66 v 2.3 q -0.8,0.4 -1.7,0.58 -0.88,0.2 -2.14,0.2 -1.64,0 -2.9,-0.6 -1.26,-0.62 -1.98,-1.86 -0.72,-1.24 -0.72,-3.12 0,-1.92 0.64,-3.18 0.66,-1.28 1.82,-1.92 1.16,-0.64 2.7,-0.64 z m 0.02,2.12 q -0.86,0 -1.44,0.56 -0.56,0.56 -0.66,1.74 h 4.18 q -0.02,-1 -0.52,-1.64 -0.5,-0.66 -1.56,-0.66 z m 12.89999,-2.12 q 0.22,0 0.52,0.02 0.3,0.02 0.48,0.06 l -0.22,2.8 q -0.14,-0.04 -0.42,-0.06 -0.26,-0.04 -0.46,-0.04 -0.76,0 -1.46,0.28 -0.7,0.26 -1.14,0.86 -0.42,0.6 -0.42,1.64 V 14 h -2.98 V 3.08 h 2.26 l 0.44,1.84 h 0.14 q 0.48,-0.84 1.32,-1.44 0.84,-0.6 1.94,-0.6 z"
-     id="text10"
-     style="font-weight:700;font-size:20px;font-family:Overpass;letter-spacing:-0.5;fill:#1b2733"
-     aria-label="linebuffer" />
-</svg></span></span>
+            <span class="logo"><svg class="mk-anim" viewBox="0 0 38 14" aria-hidden="true" focusable="false"><defs><clipPath id="lbclip"><rect width="38" height="14"/></clipPath></defs><g clip-path="url(#lbclip)"><g><rect x="0" y="0" width="6" height="6" fill="currentColor"/><rect x="8" y="0" width="6" height="6" fill="currentColor"/><rect x="16" y="0" width="6" height="6" fill="currentColor"/><rect x="24" y="0" width="6" height="6" fill="currentColor"/><rect x="32" y="0" width="6" height="6" fill="currentColor"/><rect x="0" y="8" width="6" height="6" fill="currentColor"><animate attributeName="fill" values="currentColor;currentColor;currentColor;currentColor;currentColor;#D9A521;currentColor;currentColor;currentColor" keyTimes="0;0.0909;0.1704;0.2499;0.3635;0.4203;0.4998;0.5793;0.5907" calcMode="discrete" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/><animate attributeName="fill-opacity" values="1;1;1;1;1;1;1;1;1" keyTimes="0;0.0909;0.1704;0.2499;0.3635;0.4203;0.4998;0.5793;0.5907" calcMode="discrete" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/></rect><rect x="8" y="8" width="6" height="6" fill="currentColor"><animate attributeName="fill" values="currentColor;currentColor;currentColor;currentColor;currentColor;currentColor;#D9A521;currentColor;currentColor" keyTimes="0;0.0909;0.1704;0.2499;0.3635;0.4203;0.4998;0.5793;0.5907" calcMode="discrete" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/><animate attributeName="fill-opacity" values="1;1;1;1;1;0.18;1;1;1" keyTimes="0;0.0909;0.1704;0.2499;0.3635;0.4203;0.4998;0.5793;0.5907" calcMode="discrete" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/></rect><rect x="16" y="8" width="6" height="6" fill="currentColor"><animate attributeName="fill" values="#D9A521;currentColor;currentColor;currentColor;currentColor;currentColor;currentColor;#D9A521;#D9A521" keyTimes="0;0.0909;0.1704;0.2499;0.3635;0.4203;0.4998;0.5793;0.5907" calcMode="discrete" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/><animate attributeName="fill-opacity" values="1;1;1;1;1;0.18;0.18;1;1" keyTimes="0;0.0909;0.1704;0.2499;0.3635;0.4203;0.4998;0.5793;0.5907" calcMode="discrete" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/></rect><rect x="24" y="8" width="6" height="6" fill="currentColor"><animate attributeName="fill" values="currentColor;#D9A521;currentColor;currentColor;currentColor;currentColor;currentColor;currentColor;currentColor" keyTimes="0;0.0909;0.1704;0.2499;0.3635;0.4203;0.4998;0.5793;0.5907" calcMode="discrete" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/><animate attributeName="fill-opacity" values="0.18;1;1;1;1;0.18;0.18;0.18;0.18" keyTimes="0;0.0909;0.1704;0.2499;0.3635;0.4203;0.4998;0.5793;0.5907" calcMode="discrete" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/></rect><rect x="32" y="8" width="6" height="6" fill="currentColor"><animate attributeName="fill" values="currentColor;currentColor;#D9A521;currentColor;currentColor;currentColor;currentColor;currentColor;currentColor" keyTimes="0;0.0909;0.1704;0.2499;0.3635;0.4203;0.4998;0.5793;0.5907" calcMode="discrete" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/><animate attributeName="fill-opacity" values="0.18;0.18;1;1;1;0.18;0.18;0.18;0.18" keyTimes="0;0.0909;0.1704;0.2499;0.3635;0.4203;0.4998;0.5793;0.5907" calcMode="discrete" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/></rect><rect x="0" y="16" width="6" height="6" fill="currentColor" fill-opacity="0.18"/><rect x="8" y="16" width="6" height="6" fill="currentColor" fill-opacity="0.18"/><rect x="16" y="16" width="6" height="6" fill="currentColor" fill-opacity="0.18"/><rect x="24" y="16" width="6" height="6" fill="currentColor" fill-opacity="0.18"/><rect x="32" y="16" width="6" height="6" fill="currentColor" fill-opacity="0.18"/><animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 -8;0 0;0 0" keyTimes="0;0.3635;0.4203;0.4203;1" calcMode="linear" dur="4.4s" begin="0.4s" repeatCount="indefinite" fill="freeze"/></g></g></svg><svg class="mk-static" viewBox="0 0 38 14" aria-hidden="true" focusable="false"><rect x="0" y="0" width="6" height="6" fill="currentColor"/><rect x="8" y="0" width="6" height="6" fill="currentColor"/><rect x="16" y="0" width="6" height="6" fill="currentColor"/><rect x="24" y="0" width="6" height="6" fill="currentColor"/><rect x="32" y="0" width="6" height="6" fill="currentColor"/><rect x="0" y="8" width="6" height="6" fill="currentColor"/><rect x="8" y="8" width="6" height="6" fill="currentColor"/><rect x="16" y="8" width="6" height="6" style="fill:var(--brand-accent)"/><rect x="24" y="8" width="6" height="6" fill="currentColor" opacity=".18"/><rect x="32" y="8" width="6" height="6" fill="currentColor" opacity=".18"/></svg><span class="wm">linebuffer</span></span>
             <span class="sep">/</span>
             <h1>OSD Design Studio</h1>
             <span class="version">v0.1</span>
