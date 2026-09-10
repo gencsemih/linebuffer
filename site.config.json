@@ -28,7 +28,7 @@
     {
       "slug": "osd-design-studio",
       "name": "OSD Design Studio",
-      "version": "0.1.0",
+      "version": "1.0.0",
       "publish": true,
       "status": "browser",
       "app": "/tools/osd-design-studio/app/",
