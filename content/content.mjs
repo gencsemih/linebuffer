@@ -145,7 +145,7 @@ export const tools = {
       io: {
         title: 'What the generated module connects to',
         notes: [
-          ['Video stream in', 'Parallel video (pixel clock, syncs, data enable, data) or AXI4-Stream, grayscale or RGB, at the resolution set in the project.'],
+          ['Video stream in', 'Parallel video or AXI4-Stream, grayscale or RGB, at the resolution set in the project.'],
           ['Bindings', 'The live values the OSD shows: readouts, enumerated states, visibility flags and the menu buttons. Delivered as plain top-level ports, or written through an AXI4-Lite register map that the export generates and documents.'],
           ['Video stream out', 'The same stream, same format and timing, a fixed number of clock cycles later, with the OSD drawn on it. No frame or line buffer, so latency is constant and memory is not needed.'],
         ],

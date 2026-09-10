@@ -278,8 +278,7 @@ const IO_DIAGRAM = {
   <g class="mk-static" transform="translate(382 138) scale(2)"><rect x="0" y="0" width="6" height="6" fill="currentColor"/><rect x="8" y="0" width="6" height="6" fill="currentColor"/><rect x="16" y="0" width="6" height="6" fill="currentColor"/><rect x="24" y="0" width="6" height="6" fill="currentColor"/><rect x="32" y="0" width="6" height="6" fill="currentColor"/><rect x="0" y="8" width="6" height="6" fill="currentColor"/><rect x="8" y="8" width="6" height="6" fill="currentColor"/><rect x="16" y="8" width="6" height="6" style="fill:var(--accent)"/><rect x="24" y="8" width="6" height="6" fill="currentColor" opacity=".18"/><rect x="32" y="8" width="6" height="6" fill="currentColor" opacity=".18"/></g>
   <text class="m" x="428" y="52">clk</text>
   <text class="b" x="40" y="86">Video stream in</text>
-  <text class="s" x="40" y="130">parallel video: pclk, hsync, vsync, de, data</text>
-  <text class="s" x="40" y="146">or AXI4-Stream</text>
+  <text class="s" x="40" y="130">parallel video or AXI4-Stream</text>
   <text class="b" x="40" y="176">Bindings</text>
   <text class="m" x="40" y="190">plain ports</text>
   <text class="m" x="40" y="243">AXI4-Lite registers</text>
