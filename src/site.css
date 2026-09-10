@@ -200,7 +200,8 @@ section + section { border-top: 1px solid var(--line); }
 .tool-hero { max-width: 900px; }
 .tool-hero.with-image { max-width: none; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 20px 40px; align-items: start; }
 .tool-hero.with-image .tool-intro { display: grid; gap: 14px; }
-.tool-hero.with-image .points { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; }
+.tool-paras { display: grid; gap: 10px; max-width: 60ch; }
+.tool-paras p { font-size: 15px; line-height: 1.55; }
 .tool-hero.with-image .opts { grid-column: 1 / -1; max-width: none; margin-top: 10px; }
 .tool-hero-img { display: block; align-self: center; }
 .tool-hero-img img { width: 100%; height: auto; border: 1px solid var(--line); background: var(--paper); }

@@ -334,7 +334,7 @@ for (const t of tools) {
   <div class="tool-intro">
     <div class="head"><h1>${esc(t.name)}</h1><span class="ver">v${esc(t.version)}</span>${t.status === 'browser' ? '<span class="pill acc">free in the browser</span>' : '<span class="pill">on request</span>'}</div>
     <p class="lede">${esc(c.lede)}</p>
-    ${c.points ? `<div class="points">${c.points.map(([k, v]) => `<div class="point"><h3>${esc(k)}</h3><p class="muted small">${esc(v)}</p></div>`).join('')}</div>` : ''}
+    ${c.paragraphs ? `<div class="tool-paras">${c.paragraphs.map((t) => `<p class="muted">${esc(t)}</p>`).join('')}</div>` : ''}
   </div>
   ${t.hero ? `<a class="tool-hero-img" href="${url(`/img/${t.slug}/${t.hero}.webp`)}"><img src="${url(`/img/${t.slug}/${t.hero}-750.webp`)}" srcset="${url(`/img/${t.slug}/${t.hero}-750.webp`)} 750w, ${url(`/img/${t.slug}/${t.hero}.webp`)} 1500w" sizes="(max-width: 860px) 100vw, 45vw" width="750" height="475" alt="${esc(t.name)}: the designer with the menu open"></a>` : ''}
   ${c.options ? cta : `<div class="btns">${cta}</div>`}
