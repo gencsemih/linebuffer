@@ -53,7 +53,7 @@ export const services = {
       bullets: [
         'Streaming architectures with a stated latency and no more buffering than the function needs',
         'Correction and calibration pipelines for infrared and CMOS imagers',
-        'On-screen display and menu overlays generated as verified RTL',
+        'On-screen display and menu overlays generated as verified RTL with [[OSD Design Studio|/tools/osd-design-studio/]]',
       ],
     },
     {
@@ -151,7 +151,19 @@ export const tools = {
         ],
       },
       summary: 'Design an on-screen-display menu on a canvas and export a verified, fixed-latency Verilog overlay module with its testbench.',
-      lede: 'Design an on-screen display visually, try it live, and export it as verified RTL.',
+      seo: {
+        title: 'OSD Design Studio: on-screen display (OSD) design tool for FPGA and ASIC video, exports Verilog',
+        description: 'Design an on-screen display for an FPGA or ASIC video pipeline, simulate the menu, and export a synthesizable Verilog or SystemVerilog OSD overlay with a self-checking testbench. Free in the browser.',
+      },
+      lede: 'An on-screen display (OSD) design tool for FPGA and ASIC video pipelines: draw the overlay, try the menu live, and export it as verified Verilog.',
+      faq: [
+        ['What is OSD Design Studio?', 'A design tool for on-screen displays (OSD) in FPGA and ASIC video pipelines. You lay out text, readouts, markers, bars, icons and a menu over a sample frame, run the menu with on-screen buttons, and export a synthesizable Verilog or SystemVerilog overlay module together with a self-checking testbench.'],
+        ['Does the generated OSD overlay need a frame buffer?', 'No. The overlay is a streaming module: video in, the same video out with the OSD drawn on it, after a fixed clock latency. It needs no frame buffer and no external memory, which keeps latency constant and resource use small.'],
+        ['Which video interfaces does the OSD module support?', 'Parallel video and AXI4-Stream, in grayscale or RGB, at the resolution you set in the project. Bindings, the live values the OSD shows, arrive either as plain top-level ports or through an AXI4-Lite register map that the export generates and documents.'],
+        ['How is the exported RTL verified?', 'The export includes a self-checking SystemVerilog testbench whose golden frames come from the same renderer you designed with, so the hardware is compared against the picture you saw, bit for bit. The command-line edition runs it under Verilator.'],
+        ['Is OSD Design Studio free?', 'The browser edition is free for designing and simulating. Export, the desktop application and the command-line edition are licensed. Write to hello@linebuffer.com for pricing and a trial.'],
+        ['Can I use it for an OSD menu with buttons?', 'Yes. Menus have pages and items (sub-page, back, action, confirm, toggle, enum, number, value, separator, exit) driven by a navigation state machine with debounce, long-press repeat and timeouts, and the same state machine is generated into the RTL.'],
+      ],
       paragraphs: [
         'Design the overlay on a canvas the size of your video’s active area, with text, readouts, markers, bars, icons and a menu, and run the menu with on-screen buttons on the same state machine the RTL is generated from.',
         'Export a synthesizable Verilog or SystemVerilog overlay: video in, the same stream out with the OSD on it, fixed latency, no frame or line buffer. A self-checking testbench, with golden frames from the same renderer, comes with it.',

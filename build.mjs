@@ -54,8 +54,14 @@ const lockup = (cls = '', animated = false) => `<a class="lockup ${cls}" href="$
 const tools = cfg.tools.filter((t) => DRAFT || t.publish);
 const hidden = cfg.tools.filter((t) => !t.publish);
 
-function page({ path, title, description, body, current }) {
-  const fullTitle = path === '/' ? `${cfg.displayName} — ${cfg.descriptor}` : `${title} — ${cfg.displayName}`;
+const inline = (t) => esc(t).replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, (m, a, b) => `<a href="${url(b)}">${a}</a>`);
+const orgLd = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'Organization', name: cfg.displayName, url: site,
+  logo: `${site}${url('/brand/app-icon.svg')}`, email: cfg.email, founder: { '@type': 'Person', name: cfg.founder },
+  description: cfg.descriptor, knowsAbout: ['image sensor digital design', 'ROIC', 'FPGA design', 'video bridging', 'MIPI CSI-2', 'real-time image processing', 'on-screen display'],
+});
+function page({ path, title, description, body, current, titleOverride, ogImage, jsonld = [] }) {
+  const fullTitle = titleOverride || (path === '/' ? `${cfg.displayName} — ${cfg.descriptor}` : `${title} — ${cfg.displayName}`);
   const nav = cfg.nav
     .map((n) => `<a href="${url(n.href)}"${current === n.href ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`)
     .join('');
@@ -72,7 +78,8 @@ function page({ path, title, description, body, current }) {
 <meta property="og:title" content="${esc(fullTitle)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${site}${url(path)}">
-<meta property="og:image" content="${site}${asset('/og.png')}">
+<meta property="og:image" content="${site}${ogImage || asset('/og.png')}">
+<meta property="og:image:alt" content="${esc(ogImage ? title : cfg.displayName + ' — ' + cfg.descriptor)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0B0F18">
 <script>(function(){try{if(localStorage.getItem('lb-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}})();</script>
@@ -82,6 +89,8 @@ function page({ path, title, description, body, current }) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;500;600;700&family=Overpass+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="${url('/site.css')}?v=${cssHash}">
+<script type="application/ld+json">${orgLd}</script>
+${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join('\n')}
 </head>
 <body>
 ${DRAFT ? '<div class="draft-banner">Draft build · not for publishing · includes tools with publish:false</div>' : ''}
@@ -94,6 +103,7 @@ ${body}
     ${lockup()}
     <div>${esc(cfg.descriptor)}</div>
     <div>Founded by ${esc(cfg.founder)}${cfg.location ? ` · ${esc(cfg.location)}` : ''}</div>
+    ${tools.length ? `<div>${tools.map((x) => `<a href="${url('/tools/' + x.slug + '/')}">${esc(x.name)}</a>`).join(' · ')}</div>` : ''}
   </div>
   <div class="col" style="text-align:right">
     <a href="${mailto}">${esc(cfg.email)}</a>
@@ -140,7 +150,7 @@ const serviceCards = (items, withLinks) => `<div class="grid g2fixed">${items
     <span class="svc-ind" aria-hidden="true"></span>
   </button>
   <div class="svc-body" id="svc-${s.slug}"><div class="svc-inner">
-    <ul class="small">${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
+    <ul class="small">${s.bullets.map((b) => `<li>${inline(b)}</li>`).join('')}</ul>
     ${withLinks ? `<a class="more" href="${url('/services/#' + s.slug)}">Read more<span class="sr-only"> about ${esc(s.title)}</span></a>` : ''}
   </div></div>
 </article>`
@@ -229,7 +239,7 @@ ${content.services.items
   .map(
     (s) => `<section id="${s.slug}"><div class="wrap"><div class="grid g2" style="align-items:start">
   <div>${fig(s.slug)}<h2>${esc(s.title)}</h2><p class="muted" style="margin-top:12px">${esc(s.short)}</p></div>
-  <ul>${s.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>
+  <ul>${s.bullets.map((b) => `<li>${inline(b)}</li>`).join('')}</ul>
 </div></div></section>`
   )
   .join('')}
@@ -331,7 +341,25 @@ for (const t of tools) {
       path: `/tools/${t.slug}/`,
       current: '/tools/',
       title: t.name,
-      description: c.summary,
+      titleOverride: c.seo && c.seo.title,
+      description: (c.seo && c.seo.description) || c.summary,
+      ogImage: t.hero ? asset(`/img/${t.slug}/${t.hero}.webp`) : undefined,
+      jsonld: [
+        {
+          '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: t.name, url: `${site}${url('/tools/' + t.slug + '/')}`,
+          applicationCategory: 'DeveloperApplication', applicationSubCategory: 'Electronic design automation', operatingSystem: 'Web browser, Linux, Windows',
+          softwareVersion: t.version, description: (c.seo && c.seo.description) || c.summary,
+          screenshot: t.hero ? `${site}${asset(`/img/${t.slug}/${t.hero}.webp`)}` : undefined,
+          offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR', description: 'Browser edition free for designing and simulating; export, desktop and command-line editions licensed.' },
+          author: { '@type': 'Organization', name: cfg.displayName, url: site },
+          keywords: 'OSD, on-screen display, OSD design tool, OSD generator, FPGA video overlay, Verilog, SystemVerilog, AXI4-Stream, menu overlay',
+        },
+        { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+          { '@type': 'ListItem', position: 1, name: cfg.displayName, item: site + url('/') },
+          { '@type': 'ListItem', position: 2, name: 'Tools', item: site + url('/tools/') },
+          { '@type': 'ListItem', position: 3, name: t.name, item: site + url('/tools/' + t.slug + '/') } ] },
+        ...(c.faq ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: c.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }] : []),
+      ],
       body: `
 <section class="hero"><div class="wrap"><div class="tool-hero${t.hero ? ' with-image' : ''}">
   <div class="tool-intro">
@@ -354,6 +382,7 @@ ${gallery}
   <h2>Availability</h2>
   <p class="muted" style="margin-top:12px">${esc(c.availability)}</p>
 </div></div></section>
+${c.faq ? `<section><div class="wrap"><div class="sec-head"><h2>Questions</h2></div><div class="faq">${c.faq.map(([q, a]) => `<div class="qa"><h3>${esc(q)}</h3><p class="muted">${esc(a)}</p></div>`).join('')}</div></div></section>` : ''}
 ${contactStrip('Questions about ' + t.name + '?', 'Write with what you are trying to build; a short answer usually comes back the same day.')}
 `,
     })
@@ -404,7 +433,7 @@ writeFileSync(join(out, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${site
 writeFileSync(
   join(out, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages
-    .map((p) => `  <url><loc>${site}${url(p)}</loc></url>`)
+    .map((p) => `  <url><loc>${site}${url(p)}</loc><lastmod>${new Date().toISOString().slice(0, 10)}</lastmod><priority>${p === '/' || p.startsWith('/tools/') && p !== '/tools/' ? '1.0' : '0.7'}</priority></url>`)
     .join('\n')}\n</urlset>\n`
 );
 if (cfg.domain && !base) writeFileSync(join(out, 'CNAME'), cfg.domain + '\n');
