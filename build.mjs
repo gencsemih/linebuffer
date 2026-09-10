@@ -162,7 +162,7 @@ const workList = (items) => `<div class="work">${items
 const toolCards = (list) => `<div class="tools">${list
   .map((t) => {
     const c = content.tools.byName[t.slug];
-    const status = t.status === 'browser' ? '<span class="pill acc">runs in the browser</span>' : '<span class="pill">on request</span>';
+    const status = t.status === 'browser' ? '<span class="pill acc">free in the browser</span>' : '<span class="pill">on request</span>';
     const shot = t.hero
       ? `<a class="tool-shot" href="${url('/tools/' + t.slug + '/')}" tabindex="-1" aria-hidden="true"><img src="${url(`/img/${t.slug}/${t.hero}-750.webp`)}" srcset="${url(`/img/${t.slug}/${t.hero}-750.webp`)} 750w, ${url(`/img/${t.slug}/${t.hero}.webp`)} 1500w" sizes="(max-width: 720px) 100vw, 60vw" width="750" height="475" loading="lazy" alt=""></a>`
       : `<div class="tool-shot tool-shot-empty" aria-hidden="true">${mark}</div>`;
@@ -331,7 +331,7 @@ for (const t of tools) {
       description: c.summary,
       body: `
 <section class="hero"><div class="wrap"><div class="tool-hero">
-  <div class="head"><h1>${esc(t.name)}</h1><span class="ver">v${esc(t.version)}</span>${t.status === 'browser' ? '<span class="pill acc">runs in the browser</span>' : '<span class="pill">on request</span>'}</div>
+  <div class="head"><h1>${esc(t.name)}</h1><span class="ver">v${esc(t.version)}</span>${t.status === 'browser' ? '<span class="pill acc">free in the browser</span>' : '<span class="pill">on request</span>'}</div>
   <p class="lede">${esc(c.lede)}</p>
   ${c.options ? cta : `<div class="btns">${cta}</div>`}
   ${DRAFT && t.rightsNote ? `<p class="small" style="color:var(--accent)">Draft note: ${esc(t.rightsNote)}</p>` : ''}

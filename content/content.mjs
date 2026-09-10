@@ -138,9 +138,9 @@ export const tools = {
   byName: {
     'osd-design-studio': {
       options: [
-        { title: 'Browser', body: 'Nothing to install. Projects stay in browser storage until you save them as a file; export downloads a zip.', label: 'Open in the browser', href: 'app' },
-        { title: 'Desktop', body: 'A native window with real file dialogs, for Linux and Windows. Same renderer, same export, works offline.', label: 'Request the desktop build', mail: 'OSD Design Studio desktop build' },
-        { title: 'Command line', body: 'Headless export, render, verify, info and validate. Runs the generated testbench under Verilator, so it fits a regression flow.', label: 'Request the CLI', mail: 'OSD Design Studio CLI' },
+        { title: 'Browser', body: 'Free. Design the overlay, run the menu and check the design rules, nothing to install. Projects stay in browser storage until you save them as a file. Export is reserved for the licensed versions.', label: 'Open in the browser', href: 'app' },
+        { title: 'Desktop', body: 'Licensed. A native window with real file dialogs for Linux and Windows, full RTL and testbench export, works offline.', label: 'Ask for a licence', mail: 'OSD Design Studio desktop licence' },
+        { title: 'Command line', body: 'Licensed. Headless export, render, verify, info and validate; runs the generated testbench under Verilator, so it fits a regression flow.', label: 'Ask for a licence', mail: 'OSD Design Studio CLI licence' },
       ],
       io: {
         title: 'What the generated module connects to',
@@ -162,7 +162,7 @@ export const tools = {
         ['Verification', 'The generated testbench compares every output frame with the renderer’s golden image; the command-line version runs it under Verilator.'],
       ],
       availability:
-        'Runs in the browser and keeps your project in browser storage until you save it as a file. Desktop and command-line versions exist; ask if you need them.',
+        'The browser version is free for designing and simulating. Export, the desktop application and the command line are licensed; write for pricing and a trial.',
     },
     'timing-studio': {
       summary: 'A clock-cycle-exact timing editor for image-sensor digital: counters, signals, modes and target blocks, in one HTML file.',
