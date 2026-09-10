@@ -193,7 +193,7 @@ section + section { border-top: 1px solid var(--line); }
 
 /* Ways to run a tool: three options side by side */
 .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 18px 28px; }
-.opt { border-top: 1px solid var(--line-strong); padding-top: 12px; display: grid; gap: 8px; align-content: start; justify-items: start; }
+.opt { display: grid; gap: 8px; align-content: start; justify-items: start; }
 .opt h3 { font-size: 17px; }
 .opt p { justify-self: stretch; }
 .opt .btn { margin-top: 4px; }
