@@ -255,6 +255,52 @@ ${contactStrip('A problem that keeps coming back in your flow?', 'Most of these 
   })
 );
 
+
+// Interface diagram for OSD Design Studio: two inputs (video stream, bindings), one output (video stream with the OSD drawn on it).
+const IO_DIAGRAM = {
+  'osd-design-studio': `<svg class="io" viewBox="0 0 770 300" role="img" aria-label="Inputs: video stream and bindings. Output: the same video stream with the OSD drawn on it.">
+  <style>.io text{font-family:inherit;font-size:13px;fill:currentColor}.io .b{font-weight:600;font-size:14px}.io .s{font-size:12px;opacity:.72}.io .m{font-family:var(--mono);font-size:11px;opacity:.8}</style>
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+  <g fill="none" stroke="currentColor" stroke-width="1.5">
+    <path d="M420 30V70" marker-end="url(#ah)"/>
+    <path d="M40 110H328" marker-end="url(#ah)"/>
+    <path d="M40 196H246L280 211H328" marker-end="url(#ah)"/>
+    <path d="M40 226H246L280 211"/>
+    <rect x="330" y="70" width="180" height="160"/>
+    <path d="M510 150H748" marker-end="url(#ah)"/>
+  </g>
+  <g fill="currentColor"><rect x="60" y="97" width="8" height="8"/><rect x="72" y="97" width="8" height="8"/><rect x="84" y="97" width="8" height="8"/><rect x="96" y="97" width="8" height="8"/><rect x="108" y="97" width="8" height="8"/><rect x="120" y="97" width="8" height="8"/></g>
+  <g fill="currentColor"><rect x="570" y="137" width="8" height="8"/><rect x="582" y="137" width="8" height="8"/><rect x="594" y="137" width="8" height="8"/><rect x="606" y="137" width="8" height="8"/><rect x="618" y="137" width="8" height="8"/><rect x="630" y="137" width="8" height="8"/></g>
+  <g fill="none" stroke-width="1.5" style="stroke:var(--accent)"><rect x="648" y="118" width="46" height="26"/><path d="M654 126h20M654 132h14M654 138h26"/></g>
+  <g transform="translate(382 138) scale(2)"><rect x="0" y="0" width="6" height="6" fill="currentColor"/><rect x="8" y="0" width="6" height="6" fill="currentColor"/><rect x="16" y="0" width="6" height="6" fill="currentColor"/><rect x="24" y="0" width="6" height="6" fill="currentColor"/><rect x="32" y="0" width="6" height="6" fill="currentColor"/><rect x="0" y="8" width="6" height="6" fill="currentColor"/><rect x="8" y="8" width="6" height="6" fill="currentColor"/><rect x="16" y="8" width="6" height="6" style="fill:var(--accent)"/><rect x="24" y="8" width="6" height="6" fill="currentColor" opacity=".18"/><rect x="32" y="8" width="6" height="6" fill="currentColor" opacity=".18"/></g>
+  <text class="m" x="428" y="52">clk</text>
+  <text class="b" x="40" y="86">Video stream in</text>
+  <text class="s" x="40" y="130">parallel video: pclk, hsync, vsync, de, data</text>
+  <text class="s" x="40" y="146">or AXI4-Stream</text>
+  <text class="b" x="40" y="176">Bindings</text>
+  <text class="m" x="40" y="190">plain ports</text>
+  <text class="m" x="40" y="243">AXI4-Lite registers</text>
+  <text class="s" x="40" y="266">readout values, enum states, visibility flags,</text>
+  <text class="s" x="40" y="282">menu buttons</text>
+  <text class="b" x="420" y="100" text-anchor="middle">OSD overlay</text>
+  <text class="s" x="420" y="117" text-anchor="middle">generated RTL</text>
+  <text class="s" x="420" y="196" text-anchor="middle">fixed 8-cycle latency</text>
+  <text class="s" x="420" y="212" text-anchor="middle">no frame buffer</text>
+  <text class="b" x="520" y="100">Video stream out</text>
+  <text class="s" x="520" y="176">same format and timing,</text>
+  <text class="s" x="520" y="192">OSD drawn on it</text>
+</svg>`,
+};
+const ioSection = (t) => {
+  const c = content.tools.byName[t.slug];
+  if (!IO_DIAGRAM[t.slug] || !c.io) return '';
+  return `<section><div class="wrap">
+  <div class="sec-head"><h2>${esc(c.io.title)}</h2></div>
+  <div class="io-wrap">${IO_DIAGRAM[t.slug]}</div>
+  <div class="io-notes">${c.io.notes.map(([k, v]) => `<div><h4>${esc(k)}</h4><p class="muted small">${esc(v)}</p></div>`).join('')}</div>
+</div></section>`;
+};
+
 // Tool pages
 for (const t of tools) {
   const c = content.tools.byName[t.slug];
@@ -282,6 +328,7 @@ for (const t of tools) {
   <div class="btns">${cta}</div>
   ${DRAFT && t.rightsNote ? `<p class="small" style="color:var(--accent)">Draft note: ${esc(t.rightsNote)}</p>` : ''}
 </div></div></section>
+${ioSection(t)}
 ${gallery}
 <section><div class="wrap">
   <div class="sec-head"><h2>What it does</h2></div>

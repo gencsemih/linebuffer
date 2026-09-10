@@ -137,6 +137,14 @@ export const tools = {
     'Built for problems that kept coming back, client after client. Each tool solves one of them once, exactly.',
   byName: {
     'osd-design-studio': {
+      io: {
+        title: 'What the generated module connects to',
+        notes: [
+          ['Video stream in', 'Parallel video (pixel clock, syncs, data enable, data) or AXI4-Stream, grayscale or RGB, at the resolution set in the project.'],
+          ['Bindings', 'The live values the OSD shows: readouts, enumerated states, visibility flags and the menu buttons. Delivered as plain top-level ports, or written through an AXI4-Lite register map that the export generates and documents.'],
+          ['Video stream out', 'The same stream, same format and timing, eight clock cycles later, with the OSD drawn on it. No frame or line buffer, so latency is fixed and memory is not needed.'],
+        ],
+      },
       summary: 'Design an on-screen-display menu on a canvas and export a verified, fixed-latency Verilog overlay module with its testbench.',
       lede:
         'Lay out an on-screen-display menu on a canvas the size of your video’s active area, try the menu with on-screen buttons, and export a synthesizable Verilog or SystemVerilog overlay module: video stream in, the same stream out with the OSD drawn on it, a fixed eight-cycle latency, and no frame or line buffer. The export includes a self-checking testbench whose golden frames come from the same renderer you designed with.',

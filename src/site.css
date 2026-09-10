@@ -186,6 +186,12 @@ section + section { border-top: 1px solid var(--line); }
 .features .k { font-weight: 600; }
 @media (max-width: 640px) { .features .row { grid-template-columns: 1fr; gap: 4px; } }
 
+/* Interface diagram */
+.io-wrap { max-width: 760px; color: var(--ink); }
+.io-wrap svg { width: 100%; height: auto; display: block; }
+.io-notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px 32px; margin-top: 18px; max-width: 900px; }
+.io-notes h4 { margin-bottom: 4px; }
+
 /* Contact strip */
 .contact { border-top: 1px solid var(--line); }
 .contact .inner { display: grid; gap: 8px; max-width: var(--measure); }
