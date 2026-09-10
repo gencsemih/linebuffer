@@ -8,8 +8,8 @@ export const home = {
   ctaPrimary: { label: 'What we do', href: '/services/' },
   ctaSecondary: { label: 'Start a conversation' },
   contact: {
-    title: 'Have an image-processing or sensor-digital problem?',
-    body: 'The usual first step is a one-hour call about the problem, followed by a short written proposal with scope, deliverables and a schedule.',
+    title: 'Consultancy and design services',
+    body: 'From a design review or a few days of expert advice to a complete block, board or verification package delivered and handed over. The usual first step is a one-hour call about the problem, followed by a short written proposal with scope, deliverables and a schedule.',
   },
 };
 
