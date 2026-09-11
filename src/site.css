@@ -68,7 +68,7 @@ li + li { margin-top: 3px; }
 @media (prefers-reduced-motion: reduce) { .lockup .mk-anim, svg .mk-anim { display: none; } .lockup .mk-static { display: block; } svg .mk-static { display: inline; } }
 .lockup { display: inline-flex; align-items: center; gap: 0.36em; line-height: 1; color: inherit; text-decoration: none; }
 .lockup svg { height: 0.44em; width: auto; display: block; }
-.lockup .wm { font-weight: 700; letter-spacing: -0.025em; line-height: 1; }
+.lockup .wm { font-weight: 700; letter-spacing: -0.025em; line-height: 1; font-variant-ligatures: none; }  /* Overpass merges the ff crossbars in a ligature */
 
 /* Header */
 .site-hdr { border-bottom: 1px solid var(--line); }
