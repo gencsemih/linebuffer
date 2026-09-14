@@ -192,6 +192,43 @@ const toolCards = (list) => `<div class="tools">${list
   })
   .join('')}</div>`;
 
+
+// Hero figure: the signal path the practice works on, sensor to display.
+// The gold readout row and the gold pointer in the line-buffer mark are single rects whose
+// position is animated, so their colour still comes from --accent and follows the theme.
+const heroFigure = `<svg class="sysfig" viewBox="0 0 520 190" role="img" aria-label="Signal path: image sensor and ROIC, digital design on FPGA or ASIC, video link, display with an on-screen display.">
+  <defs><marker id="hf-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs>
+  <g fill="none" stroke="currentColor" stroke-width="1.6">
+    <path d="M14 58C24 76 24 106 14 124C4 106 4 76 14 58Z"/><path d="M20 91h14" stroke-dasharray="2 4"/>
+    <rect x="40" y="58" width="66" height="66"/>
+    <path d="M106 91h34" marker-end="url(#hf-a)"/>
+    <rect x="146" y="48" width="118" height="86"/>
+    <path d="M205 30v14" marker-end="url(#hf-a)"/>
+    <path d="M264 91h30"/>
+    <path d="M294 86h44M294 96h44" stroke-width="1.4"/>
+    <path d="M338 91h24" marker-end="url(#hf-a)"/>
+    <rect x="368" y="50" width="130" height="82"/><path d="M420 132v10h26v-10"/>
+  </g>
+  <g stroke="currentColor" stroke-width="1" opacity=".38"><path d="M40 71.2h66M40 84.4h66M40 97.6h66M40 110.8h66M53.2 58v66M66.4 58v66M79.6 58v66M92.8 58v66"/></g>
+  <g class="mk-anim">
+    <rect x="40" y="58" width="66" height="13.2" style="fill:var(--accent)" opacity=".28"><animate attributeName="y" values="58;71.2;84.4;97.6;110.8;58" keyTimes="0;0.2;0.4;0.6;0.8;1" calcMode="discrete" dur="2.6s" repeatCount="indefinite"/></rect>
+    <rect x="33" y="58" width="4" height="13.2" style="fill:var(--accent)"><animate attributeName="y" values="58;71.2;84.4;97.6;110.8;58" keyTimes="0;0.2;0.4;0.6;0.8;1" calcMode="discrete" dur="2.6s" repeatCount="indefinite"/></rect>
+  </g>
+  <g class="mk-static">
+    <rect x="40" y="84.4" width="66" height="13.2" style="fill:var(--accent)" opacity=".28"/>
+    <rect x="33" y="84.4" width="4" height="13.2" style="fill:var(--accent)"/>
+  </g>
+  <g transform="translate(167 77) scale(1.9)">
+    ${[0, 8, 16, 24, 32].map((x) => `<rect x="${x}" y="0" width="6" height="6" fill="currentColor"/>`).join('')}
+    ${[0, 8, 16, 24, 32].map((x) => `<rect x="${x}" y="8" width="6" height="6" fill="currentColor" fill-opacity=".18"/>`).join('')}
+    <rect class="mk-anim" x="0" y="8" width="6" height="6" style="fill:var(--accent)"><animate attributeName="x" values="0;8;16;24;32;0" keyTimes="0;0.2;0.4;0.6;0.8;1" calcMode="discrete" dur="2.6s" repeatCount="indefinite"/></rect>
+    <rect class="mk-static" x="16" y="8" width="6" height="6" style="fill:var(--accent)"/>
+  </g>
+  <g fill="none" stroke-width="1.4" style="stroke:var(--accent)"><rect x="380" y="60" width="40" height="24"/><path d="M385 68h18M385 75h12"/></g>
+  <g stroke="currentColor" stroke-width="1.4" opacity=".45"><path d="M380 116h34M424 116h20"/></g>
+  <g class="hf-lbl" text-anchor="middle"><text x="60" y="158">image sensor</text><text x="60" y="172">ROIC</text><text x="205" y="158">FPGA · ASIC</text><text x="205" y="172">design · verification</text><text x="433" y="158">MIPI · parallel</text><text x="433" y="172">display</text></g>
+</svg>`;
+
 const pages = [];
 const H = content.home;
 
@@ -203,10 +240,13 @@ pages.push(
     title: cfg.displayName,
     description: `${cfg.displayName}: ${cfg.descriptor.toLowerCase()}. Sensor and ROIC controllers, video bridges, FPGA design and verification, real-time image processing, analog and camera hardware.`,
     body: `
-<section class="hero"><div class="wrap"><div class="inner">
-  <h1>${esc(H.title)}</h1>
-  <p class="lede">${esc(H.lede)}</p>
-  <div class="btns"><a class="btn primary" href="${url(H.ctaPrimary.href)}">${esc(H.ctaPrimary.label)}</a><a class="btn" href="${mailto}">${esc(H.ctaSecondary.label)}</a></div>
+<section class="hero${cfg.heroFigure ? ' with-figure' : ''}"><div class="wrap"><div class="inner">
+  <div class="htext">
+    <h1>${esc(H.title)}</h1>
+    <p class="lede">${esc(H.lede)}</p>
+    <div class="btns"><a class="btn primary" href="${url(H.ctaPrimary.href)}">${esc(H.ctaPrimary.label)}</a><a class="btn" href="${mailto}">${esc(H.ctaSecondary.label)}</a></div>
+  </div>
+  ${cfg.heroFigure ? `<div class="hfig">${heroFigure}</div>` : ''}
 </div></div></section>
 
 <section id="services"><div class="wrap">

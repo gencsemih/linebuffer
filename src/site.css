@@ -136,6 +136,13 @@ section + section { border-top: 1px solid var(--line); }
 
 /* Hero */
 .hero { padding: 36px 0 32px; }
+.hero.with-figure .inner { max-width: none; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr); gap: 24px 44px; align-items: center; }
+.hero.with-figure .htext { display: grid; gap: 14px; min-width: 0; }
+.hfig { min-width: 0; }
+.sysfig { display: block; width: 100%; max-width: 520px; height: auto; color: var(--ink); }
+.sysfig .hf-lbl text { font-family: var(--mono); font-size: 11px; fill: var(--ink-3); letter-spacing: 0.03em; }
+@media (max-width: 860px) { .hero.with-figure .inner { grid-template-columns: 1fr; } .sysfig { max-width: 440px; } }
+@media (max-width: 460px) { .sysfig .hf-lbl { display: none; } }
 .hero .inner { display: grid; gap: 14px; max-width: 760px; }
 .hero h1 { max-width: 28ch; }
 .hero .lede { max-width: 60ch; }

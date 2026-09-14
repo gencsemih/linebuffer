@@ -89,5 +89,6 @@
     "email": "hello@linebuffer.com",
     "vcfFile": "semih-genc.vcf",
     "path": "/v/"
-  }
+  },
+  "heroFigure": true
 }
