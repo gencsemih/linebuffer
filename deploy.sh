@@ -22,9 +22,9 @@ case "$DEPLOY_METHOD" in
     if ! command -v lftp >/dev/null; then
       DEPLOY_HOST="$DEPLOY_HOST" DEPLOY_USER="$DEPLOY_USER" DEPLOY_PASS="${DEPLOY_PASS:?}" DEPLOY_PATH="$DEPLOY_PATH" \
       DEPLOY_PORT="${DEPLOY_PORT:-21}" DEPLOY_VERIFY_CERT="${DEPLOY_VERIFY_CERT:-yes}" python3 tools_deploy_ftps.py
-      echo "Deployed dist/ to ${DEPLOY_HOST}:${DEPLOY_PATH}"; exit 0
+      pushed=1
     fi
-    lftp -u "${DEPLOY_USER},${DEPLOY_PASS:?}" -e "
+    [ -n "${pushed:-}" ] || lftp -u "${DEPLOY_USER},${DEPLOY_PASS:?}" -e "
       set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate ${DEPLOY_VERIFY_CERT:-yes};
       mirror -R --delete --verbose --exclude-glob */.well-known/ --exclude-glob .well-known/ dist/ ${DEPLOY_PATH}/;
       bye" "${DEPLOY_HOST}"
@@ -32,3 +32,16 @@ case "$DEPLOY_METHOD" in
   *) echo "DEPLOY_METHOD must be ssh or ftps"; exit 1 ;;
 esac
 echo "Deployed dist/ to ${DEPLOY_HOST}:${DEPLOY_PATH}"
+
+# The MTA-STS policy must be served from mta-sts.<domain>, whose document root is a separate
+# directory the main FTP account cannot reach. Configure a second account in deploy.env to keep
+# the policy in step automatically; without it, this step is skipped and the file must be placed
+# by hand after any policy change.
+if [ -n "${MTASTS_HOST:-}" ]; then
+  DEPLOY_HOST="$MTASTS_HOST" DEPLOY_USER="${MTASTS_USER:?}" DEPLOY_PASS="${MTASTS_PASS:?}" \
+  DEPLOY_PATH="${MTASTS_PATH:-.}" DEPLOY_PORT="${MTASTS_PORT:-21}" DEPLOY_LOCAL="dist/mta-sts" \
+  DEPLOY_DELETE=no DEPLOY_VERIFY_CERT="${DEPLOY_VERIFY_CERT:-yes}" python3 tools_deploy_ftps.py
+  echo "Policy uploaded to ${MTASTS_HOST}:${MTASTS_PATH:-.}"
+else
+  echo "MTA-STS: no second account configured, policy not pushed to mta-sts.<domain> (see README)"
+fi

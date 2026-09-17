@@ -9,7 +9,8 @@ KEEP={'cgi-bin'}                        # top-level remote entries never deleted
 # A path with a .well-known segment at any depth is never deleted either: ACME challenges
 # live there during certificate issuance and renewal, and removing one fails the request.
 def protected(rel): return rel.split('/')[0] in KEEP or '.well-known' in rel.split('/')
-local=os.path.join(os.path.dirname(os.path.abspath(__file__)),'dist')
+local=os.path.join(os.path.dirname(os.path.abspath(__file__)), os.environ.get('DEPLOY_LOCAL','dist'))
+prune=os.environ.get('DEPLOY_DELETE','yes').lower()!='no'   # off for secondary targets we do not own outright
 
 ctx=ssl.create_default_context()
 if not verify: ctx.check_hostname=False; ctx.verify_mode=ssl.CERT_NONE
@@ -44,7 +45,7 @@ for dirpath,dirnames,filenames in os.walk(local):
         with open(os.path.join(dirpath,fn),'rb') as fh: f.storbinary('STOR '+posixpath.join(root,rf), fh)
         uploaded+=1
 # delete stale remote files/dirs (deepest first), never inside KEEP
-stale=[r for r in existing if r not in wanted and not protected(r)]
+stale=[r for r in existing if r not in wanted and not protected(r)] if prune else []
 deleted=0
 for r in sorted((r for r in stale if existing[r]=='f'), key=len, reverse=True):
     try: f.delete(posixpath.join(root,r)); deleted+=1

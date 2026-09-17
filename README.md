@@ -62,6 +62,19 @@ Three things must be true for a sending server to honour the policy:
 3. **TLS-RPT (optional)** `_smtp._tls.linebuffer.com` = `v=TLSRPTv1; rua=mailto:<address>`.
    The mailbox must exist; reports arrive as daily JSON attachments.
 
+### The policy host has its own document root
+
+DirectAdmin created `mta-sts.linebuffer.com` with the document root
+`~/domains/mta-sts.linebuffer.com/public_html`, which is **outside** the main FTP account's
+directory, so `deploy.sh` cannot write there with the primary credentials. Two ways to keep the
+policy in place:
+
+- **Automatic (preferred).** In DirectAdmin, FTP Management, create a second account whose path
+  is that directory, then fill in the `MTASTS_*` lines in `deploy.env`. Every deploy then pushes
+  `dist/mta-sts/` to it, and the step is skipped cleanly when the variables are absent.
+- **By hand.** Copy `dist/mta-sts/.well-known/mta-sts.txt` into that document root with the File
+  Manager. Remember to repeat it whenever the policy changes, such as moving to enforce.
+
 ### Rollout
 
 Start in `mode: testing` with a short `max_age`. In testing, a sender that cannot negotiate a
