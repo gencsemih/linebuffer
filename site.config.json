@@ -90,5 +90,15 @@
     "vcfFile": "semih-genc.vcf",
     "path": "/v/"
   },
-  "heroFigure": true
+  "heroFigure": true,
+  "mtaSts": {
+    "enabled": true,
+    "mode": "testing",
+    "mx": [
+      "mx.turkticaret.net"
+    ],
+    "maxAge": 86400,
+    "id": "20260917",
+    "tlsRptTo": "dmarc@linebuffer.com"
+  }
 }

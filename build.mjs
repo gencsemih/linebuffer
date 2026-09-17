@@ -494,6 +494,22 @@ if (!DRAFT) {
     for (const p of [join(out, 'tools', t.slug), join(out, 'img', t.slug)]) if (existsSync(p)) rmSync(p, { recursive: true });
   }
 }
+// MTA-STS policy (RFC 8461). Served from https://mta-sts.<domain>/.well-known/mta-sts.txt, which needs
+// its own subdomain and certificate; the file is written to both docroot layouts DirectAdmin may use.
+if (cfg.mtaSts && cfg.mtaSts.enabled) {
+  const m = cfg.mtaSts;
+  const policy = ['version: STSv1', `mode: ${m.mode}`, ...m.mx.map((h) => `mx: ${h}`), `max_age: ${m.maxAge}`].join('\r\n') + '\r\n';
+  for (const dir of ['.well-known', join('mta-sts', '.well-known')]) {
+    mkdirSync(join(out, dir), { recursive: true });
+    writeFileSync(join(out, dir, 'mta-sts.txt'), policy);
+  }
+  console.log(`MTA-STS: mode ${m.mode}, mx ${m.mx.join(' ')}, max_age ${m.maxAge}`);
+  console.log(`  TXT  _mta-sts.${cfg.domain}      "v=STSv1; id=${m.id}"`);
+  if (m.tlsRptTo) console.log(`  TXT  _smtp._tls.${cfg.domain}    "v=TLSRPTv1; rua=mailto:${m.tlsRptTo}"`);
+  console.log(`  Serve https://mta-sts.${cfg.domain}/.well-known/mta-sts.txt (subdomain + certificate needed)`);
+  console.log('  Bump the id in DNS whenever the policy text changes.');
+}
+
 writeFileSync(join(out, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${site}${url('/sitemap.xml')}\n`);
 writeFileSync(
   join(out, 'sitemap.xml'),

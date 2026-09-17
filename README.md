@@ -44,6 +44,42 @@ After rebuilding a tool, run `node sync-tools.mjs` to refresh its app under `pub
 7. **Fonts** (Overpass, Overpass Mono) load from Google Fonts. Self-host them (two WOFF2 files) if you prefer no
    third-party requests; `src/site.css` declares the fallback stacks.
 
+## Mail: MTA-STS and TLS-RPT
+
+`site.config.json` holds an `mtaSts` block; the build writes the policy to
+`dist/.well-known/mta-sts.txt` **and** `dist/mta-sts/.well-known/mta-sts.txt`, so it lands in the
+right place whether the subdomain shares the main document root or gets its own folder. The
+build prints the DNS records to add.
+
+Three things must be true for a sending server to honour the policy:
+
+1. **Subdomain.** `mta-sts.linebuffer.com` exists and is served over HTTPS with a valid
+   certificate for that exact name (DirectAdmin: create the subdomain, then issue Let's Encrypt
+   for it). The policy fetch must not be redirected, so the file has to answer directly at
+   `https://mta-sts.linebuffer.com/.well-known/mta-sts.txt`.
+2. **TXT record** `_mta-sts.linebuffer.com` = `v=STSv1; id=<id from the config>`.
+   **Bump the id whenever the policy text changes**, or senders keep the cached old policy.
+3. **TLS-RPT (optional)** `_smtp._tls.linebuffer.com` = `v=TLSRPTv1; rua=mailto:<address>`.
+   The mailbox must exist; reports arrive as daily JSON attachments.
+
+### Rollout
+
+Start in `mode: testing` with a short `max_age`. In testing, a sender that cannot negotiate a
+matching certificate still delivers the mail and reports the failure, so a mistake cannot lose
+mail. After a week of clean TLS-RPT reports, set `mode: enforce`, raise `max_age` to `604800`,
+bump the `id`, rebuild, deploy and update the TXT record.
+
+Going to `enforce` while the MX certificate does not match `mx.turkticaret.net` would make
+compliant senders **refuse to deliver**. Verify first, from a machine with outbound port 25:
+
+```sh
+openssl s_client -connect mx.turkticaret.net:25 -starttls smtp \
+  -servername mx.turkticaret.net -verify_hostname mx.turkticaret.net </dev/null
+```
+
+Expect `Verify return code: 0 (ok)` and the MX name in the certificate. Online checkers such as
+Hardenize or the Google Admin Toolbox also report this.
+
 ## Deploy
 
 - **Shared hosting (cPanel / DirectAdmin, Linux):** `public/.htaccess` ships with the build
