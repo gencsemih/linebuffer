@@ -64,16 +64,16 @@ Three things must be true for a sending server to honour the policy:
 
 ### The policy host has its own document root
 
-DirectAdmin created `mta-sts.linebuffer.com` with the document root
-`~/domains/mta-sts.linebuffer.com/public_html`, which is **outside** the main FTP account's
-directory, so `deploy.sh` cannot write there with the primary credentials. Two ways to keep the
-policy in place:
+`mta-sts.linebuffer.com` serves from `~/domains/mta-sts.linebuffer.com/public_html`, a sibling of
+the main site. The FTP account is rooted at `~/domains`, so `deploy.sh` reaches both: the site
+path carries the domain directory (`linebuffer.com/public_html`) and the `MTASTS_*` variables
+point at the policy host. The policy upload never prunes, so it cannot disturb anything the
+panel puts there.
 
-- **Automatic (preferred).** In DirectAdmin, FTP Management, create a second account whose path
-  is that directory, then fill in the `MTASTS_*` lines in `deploy.env`. Every deploy then pushes
-  `dist/mta-sts/` to it, and the step is skipped cleanly when the variables are absent.
-- **By hand.** Copy `dist/mta-sts/.well-known/mta-sts.txt` into that document root with the File
-  Manager. Remember to repeat it whenever the policy changes, such as moving to enforce.
+**Never set `DEPLOY_PATH` to `/` or `.`** The main upload deletes remote files that the build no
+longer produces, and at the account root that would take the policy host's directory with it.
+
+### Rollout
 
 ### Rollout
 
