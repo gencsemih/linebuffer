@@ -15,7 +15,7 @@ rm -f dist/CNAME   # GitHub Pages only
 
 case "$DEPLOY_METHOD" in
   ssh)
-    rsync -avz --delete --exclude '.well-known/' \
+    rsync -avz --delete --filter 'protect .well-known/***' \
       -e "ssh -p ${DEPLOY_PORT:-22}" dist/ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
     ;;
   ftps)
@@ -26,7 +26,7 @@ case "$DEPLOY_METHOD" in
     fi
     lftp -u "${DEPLOY_USER},${DEPLOY_PASS:?}" -e "
       set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate ${DEPLOY_VERIFY_CERT:-yes};
-      mirror -R --delete --verbose --exclude-glob .well-known/ dist/ ${DEPLOY_PATH}/;
+      mirror -R --delete --verbose --exclude-glob */.well-known/ --exclude-glob .well-known/ dist/ ${DEPLOY_PATH}/;
       bye" "${DEPLOY_HOST}"
     ;;
   *) echo "DEPLOY_METHOD must be ssh or ftps"; exit 1 ;;

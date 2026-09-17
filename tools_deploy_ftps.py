@@ -5,7 +5,10 @@ import ftplib, os, ssl, sys, posixpath
 host=os.environ['DEPLOY_HOST']; user=os.environ['DEPLOY_USER']; pw=os.environ['DEPLOY_PASS']
 root=os.environ.get('DEPLOY_PATH','public_html').strip('/'); port=int(os.environ.get('DEPLOY_PORT','21'))
 verify=os.environ.get('DEPLOY_VERIFY_CERT','yes').lower()!='no'
-KEEP={'cgi-bin','.well-known'}          # remote entries never deleted
+KEEP={'cgi-bin'}                        # top-level remote entries never deleted
+# A path with a .well-known segment at any depth is never deleted either: ACME challenges
+# live there during certificate issuance and renewal, and removing one fails the request.
+def protected(rel): return rel.split('/')[0] in KEEP or '.well-known' in rel.split('/')
 local=os.path.join(os.path.dirname(os.path.abspath(__file__)),'dist')
 
 ctx=ssl.create_default_context()
@@ -41,7 +44,7 @@ for dirpath,dirnames,filenames in os.walk(local):
         with open(os.path.join(dirpath,fn),'rb') as fh: f.storbinary('STOR '+posixpath.join(root,rf), fh)
         uploaded+=1
 # delete stale remote files/dirs (deepest first), never inside KEEP
-stale=[r for r in existing if r not in wanted and r.split('/')[0] not in KEEP]
+stale=[r for r in existing if r not in wanted and not protected(r)]
 deleted=0
 for r in sorted((r for r in stale if existing[r]=='f'), key=len, reverse=True):
     try: f.delete(posixpath.join(root,r)); deleted+=1

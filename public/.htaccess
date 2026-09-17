@@ -9,6 +9,8 @@ RedirectMatch 301 ^/tools/osd-designer/app/?$ /tools/osd-design-studio/app/
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Certificate validation must reach the challenge unredirected, on any host.
+  RewriteRule ^\.well-known/acme-challenge/ - [L]
   # HTTPS and one canonical host (no www)
   RewriteCond %{HTTPS} !=on [OR]
   RewriteCond %{HTTP_HOST} ^www\. [NC]
