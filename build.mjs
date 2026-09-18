@@ -82,7 +82,7 @@ ${noindex ? '<meta name="robots" content="noindex, follow">' : ''}
 <meta property="og:image" content="${site}${ogImage || asset('/og.png')}">
 <meta property="og:image:alt" content="${esc(ogImage ? title : cfg.displayName + ' — ' + cfg.descriptor)}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0E1421">
+<meta name="theme-color" content="#0B0F18">
 <script>(function(){try{if(localStorage.getItem('lb-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}})();</script>
 <link rel="icon" href="${url('/brand/favicon.svg')}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="${url('/brand/app-icon.svg')}">
