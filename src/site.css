@@ -1,12 +1,12 @@
 /* Linebuffer site: minimalist, dark by default, light on request (header switch, remembered per browser).
    Navy and paper grounds from the studio apps, gold only in the mark and the small rules. */
 :root {
-  --bg: #121A2A;
-  --paper: #1B2438;
+  --bg: #0E1421;
+  --paper: #182032;
   --ink: #DCE3EE;
   --ink-2: #8A94A8;
   --ink-3: #77839A;
-  --line: #2B3449;
+  --line: #272F40;
   --line-strong: #DCE3EE;
   --accent: #D9A521;       /* gold: the pointer cell, eyebrow rules */
   --link: #DCE3EE;         /* links are ink, underlined */
